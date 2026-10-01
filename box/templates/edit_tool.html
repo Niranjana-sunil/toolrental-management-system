@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ToolBox | Edit Tool</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px),
+                #0f0e13;
+
+            background-size: 45px 45px;
+
+            color: #f8f5f7;
+
+            min-height: 100vh;
+        }
+
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            width: 245px;
+            height: 100vh;
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+
+            background: #111016;
+
+            border-right: 1px solid rgba(255,255,255,0.07);
+
+            padding: 28px 18px;
+
+            z-index: 2000;
+
+            overflow-y: auto;
+        }
+
+        .logo {
+            display: block;
+
+            text-decoration: none;
+
+            color: #ffffff;
+
+            font-size: 24px;
+
+            font-weight: 800;
+
+            padding: 0 12px;
+
+            margin-bottom: 42px;
+        }
+
+        .logo i {
+            color: #c875a3;
+
+            margin-right: 7px;
+        }
+
+        .logo span {
+            color: #c875a3;
+        }
+
+        .admin-label {
+            color: #6f6972;
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+            padding: 0 12px 12px;
+        }
+
+        .sidebar > a {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color: #aaa5ad;
+
+            text-decoration: none;
+
+            padding: 12px 14px;
+
+            border-radius: 10px;
+
+            margin-bottom: 5px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.25s;
+        }
+
+        .sidebar > a:hover {
+            background: rgba(200,117,163,0.09);
+
+            color: #ffffff;
+        }
+
+        .sidebar > a i {
+            width: 18px;
+
+            text-align: center;
+        }
+
+
+        /* ================= MANAGE TOOLS ================= */
+
+        .manage-main {
+            background: rgba(166,83,128,0.12);
+
+            color: #dca2c4 !important;
+
+            border: 1px solid rgba(200,117,163,0.12);
+        }
+
+
+        /* ================= SUBMENU ================= */
+
+        .submenu {
+            margin-left: 14px;
+
+            border-left: 1px solid rgba(255,255,255,0.10);
+
+            padding-left: 8px;
+
+            margin-bottom: 10px;
+        }
+
+        .submenu a {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: #858087;
+
+            text-decoration: none;
+
+            padding: 10px 12px;
+
+            border-radius: 9px;
+
+            font-size: 12px;
+
+            transition: 0.25s;
+        }
+
+        .submenu a:hover {
+            color: #ffffff;
+
+            background: rgba(200,117,163,0.08);
+        }
+
+        .submenu a.active {
+            background: #a65380;
+
+            color: #ffffff;
+
+            box-shadow:
+                0 8px 20px rgba(166,83,128,0.18);
+        }
+
+        .submenu i {
+            width: 16px;
+
+            text-align: center;
+        }
+
+
+        /* ================= LOGOUT ================= */
+
+        .logout {
+            position: absolute;
+
+            bottom: 18px;
+
+            left: 18px;
+
+            right: 18px;
+
+            border-top: 1px solid rgba(255,255,255,0.07);
+
+            padding-top: 15px;
+        }
+
+        .logout a {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color: #aaa5ad;
+
+            text-decoration: none;
+
+            padding: 12px 14px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.25s;
+        }
+
+        .logout a:hover {
+            background: rgba(239,68,68,0.08);
+
+            color: #fca5a5;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .main {
+            margin-left: 245px;
+
+            min-height: 100vh;
+        }
+
+
+        /* ================= TOPBAR ================= */
+
+        .topbar {
+            height: 72px;
+
+            background: rgba(15,14,19,0.94);
+
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 4%;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            backdrop-filter: blur(12px);
+        }
+
+        .topbar-title {
+            color: #ffffff;
+
+            font-size: 15px;
+
+            font-weight: 700;
+        }
+
+        .topbar-user {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color: #aaa5ad;
+
+            font-size: 13px;
+        }
+
+        .topbar-user i {
+            color: #c875a3;
+        }
+
+        .topbar-logout {
+            color: #dca2c4;
+
+            text-decoration: none;
+
+            border: 1px solid rgba(200,117,163,0.40);
+
+            padding: 8px 16px;
+
+            border-radius: 30px;
+
+            transition: 0.25s;
+        }
+
+        .topbar-logout:hover {
+            background: #a65380;
+
+            color: white;
+
+            border-color: #a65380;
+        }
+
+
+        /* ================= CONTENT ================= */
+
+        .content {
+            width: 90%;
+
+            max-width: 900px;
+
+            margin: 50px auto 70px;
+        }
+
+
+        /* ================= PAGE HEADER ================= */
+
+        .page-header {
+            background:
+                radial-gradient(
+                    circle at 90% 15%,
+                    rgba(166,83,128,0.22),
+                    transparent 30%
+                ),
+                #17151c;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 22px;
+
+            padding: 35px;
+
+            margin-bottom: 25px;
+        }
+
+        .page-label {
+            color: #dca2c4;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 12px;
+
+            border-left: 3px solid #c875a3;
+
+            padding-left: 10px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+
+            font-weight: 800;
+
+            color: #ffffff;
+
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #aaa5ad;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= FORM CARD ================= */
+
+        .form-card {
+            background: rgba(27,25,32,0.92);
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 22px;
+
+            padding: 32px;
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,0.25);
+        }
+
+        .form-card-header {
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding-bottom: 23px;
+
+            margin-bottom: 27px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .header-icon {
+            width: 44px;
+
+            height: 44px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: rgba(166,83,128,0.12);
+
+            border: 1px solid rgba(200,117,163,0.16);
+
+            border-radius: 12px;
+
+            color: #dca2c4;
+
+            font-size: 17px;
+        }
+
+        .form-card-header h2 {
+            font-size: 19px;
+
+            font-weight: 800;
+
+            color: #ffffff;
+        }
+
+        .form-card-header p {
+            color: #77727b;
+
+            font-size: 12px;
+
+            margin-top: 3px;
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-bottom: 21px;
+        }
+
+        .form-row {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 18px;
+        }
+
+        .form-group label {
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin-bottom: 8px;
+
+            color: #e9e5e8;
+        }
+
+        .required {
+            color: #dca2c4;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid rgba(255,255,255,0.10);
+
+            border-radius: 12px;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            font-size: 14px;
+
+            color: #ffffff;
+
+            background: #17151c;
+
+            outline: none;
+
+            transition: 0.25s;
+        }
+
+        .form-group input,
+        .form-group select {
+            height: 50px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #c875a3;
+
+            box-shadow:
+                0 0 0 3px rgba(200,117,163,0.10);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #69636d;
+        }
+
+        .form-group select option {
+            background: #17151c;
+
+            color: #ffffff;
+        }
+
+        textarea {
+            min-height: 130px;
+
+            resize: vertical;
+        }
+
+
+        /* ================= CURRENT IMAGE ================= */
+
+        .current-image {
+            margin-top: 10px;
+
+            padding: 15px;
+
+            background: #17151c;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 14px;
+        }
+
+        .current-image img {
+            width: 200px;
+
+            height: 140px;
+
+            object-fit: cover;
+
+            display: block;
+
+            border-radius: 10px;
+
+            border: 1px solid rgba(255,255,255,0.10);
+        }
+
+        .current-image p {
+            color: #77727b;
+
+            font-size: 12px;
+
+            margin-top: 9px;
+        }
+
+
+        /* ================= FILE INPUT ================= */
+
+        input[type="file"] {
+            height: auto !important;
+
+            padding: 10px !important;
+
+            color: #aaa5ad;
+
+            cursor: pointer;
+        }
+
+        input[type="file"]::file-selector-button {
+            border: none;
+
+            background: rgba(166,83,128,0.13);
+
+            color: #dca2c4;
+
+            padding: 9px 14px;
+
+            border-radius: 8px;
+
+            margin-right: 10px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+        }
+
+
+        /* ================= INFO BOX ================= */
+
+        .inventory-note {
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 10px;
+
+            padding: 14px 15px;
+
+            margin-bottom: 23px;
+
+            background: rgba(166,83,128,0.07);
+
+            border: 1px solid rgba(200,117,163,0.14);
+
+            border-radius: 12px;
+
+            color: #aaa5ad;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+        .inventory-note i {
+            color: #c875a3;
+
+            margin-top: 2px;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .buttons {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 28px;
+
+            padding-top: 23px;
+
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .btn {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            border: none;
+
+            padding: 12px 21px;
+
+            min-width: 130px;
+
+            border-radius: 30px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            transition: 0.25s;
+        }
+
+        .save-btn {
+            background: #a65380;
+
+            color: #ffffff;
+
+            box-shadow:
+                0 8px 20px rgba(166,83,128,0.18);
+        }
+
+        .save-btn:hover {
+            background: #bb6d99;
+
+            transform: translateY(-2px);
+        }
+
+        .cancel-btn {
+            background: transparent;
+
+            color: #aaa5ad;
+
+            border: 1px solid rgba(255,255,255,0.13);
+        }
+
+        .cancel-btn:hover {
+            background: rgba(200,117,163,0.07);
+
+            color: #ffffff;
+
+            border-color: rgba(200,117,163,0.40);
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #0c0b0f;
+
+            border-top: 1px solid rgba(255,255,255,0.07);
+
+            text-align: center;
+
+            padding: 27px 20px;
+
+            color: #858087;
+
+            font-size: 12px;
+        }
+
+        footer strong {
+            color: #ffffff;
+
+            font-size: 16px;
+        }
+
+        footer span {
+            color: #c875a3;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                width: 230px;
+            }
+
+            .main {
+                margin-left: 230px;
+            }
+
+            .content {
+                width: 92%;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                padding-bottom: 20px;
+            }
+
+            .logout {
+                position: static;
+
+                margin-top: 15px;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .topbar {
+                padding: 0 20px;
+            }
+
+            .topbar-title {
+                display: none;
+            }
+
+            .topbar-user {
+                margin-left: auto;
+            }
+
+            .content {
+                width: 92%;
+
+                margin-top: 30px;
+            }
+
+            .page-header {
+                padding: 27px 22px;
+            }
+
+            .page-header h1 {
+                font-size: 27px;
+            }
+
+            .form-card {
+                padding: 22px;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .topbar-user {
+                font-size: 12px;
+            }
+
+            .topbar-logout {
+                padding: 7px 12px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .current-image img {
+                width: 100%;
+
+                max-width: 280px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+
+    <a href="{% url 'admin_dashboard' %}"
+       class="logo">
+
+        <i class="fa-solid fa-screwdriver-wrench"></i>
+
+        Tool<span>Box</span>
+
+    </a>
+
+
+    <div class="admin-label">
+        Administration
+    </div>
+
+
+    <!-- DASHBOARD -->
+
+    <a href="{% url 'admin_dashboard' %}">
+
+        <i class="fa-solid fa-chart-line"></i>
+
+        <span>Dashboard</span>
+
+    </a>
+
+
+
+    <!-- MANAGE TOOLS -->
+
+    <a href="{% url 'view_tool' %}"
+       class="manage-main">
+
+        <i class="fa-solid fa-screwdriver-wrench"></i>
+
+        <span>Manage Tools</span>
+
+    </a>
+
+
+
+    <!-- SUBMENU -->
+
+    <div class="submenu">
+
+        <a href="{% url 'add_tool' %}">
+
+            <i class="fa-solid fa-plus"></i>
+
+            <span>Add Tool</span>
+
+        </a>
+
+
+        <a href="{% url 'view_tool' %}"
+           class="active">
+
+            <i class="fa-solid fa-list"></i>
+
+            <span>View Tools</span>
+
+        </a>
+
+    </div>
+
+
+
+    <!-- CATEGORIES -->
+
+    <a href="#">
+
+        <i class="fa-solid fa-folder"></i>
+
+        <span>Categories</span>
+
+    </a>
+
+
+
+    <!-- CUSTOMERS -->
+
+    <a href="{% url 'view_customers' %}">
+
+        <i class="fa-solid fa-users"></i>
+
+        <span>Customers</span>
+
+    </a>
+
+
+
+    <!-- RENTAL REQUESTS -->
+
+    <a href="{% url 'manage_rentals' %}">
+
+        <i class="fa-solid fa-clipboard-list"></i>
+
+        <span>Rental Requests</span>
+
+    </a>
+
+
+
+    <!-- LOGOUT -->
+
+    <div class="logout">
+
+        <a href="{% url 'admin_logout' %}">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            <span>Logout</span>
+
+        </a>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+
+    <!-- ================= TOPBAR ================= -->
+
+    <div class="topbar">
+
+
+        <div class="topbar-title">
+
+            Tool Management
+
+        </div>
+
+
+        <div class="topbar-user">
+
+            <i class="fa-solid fa-user"></i>
+
+            Administrator
+
+
+            <a href="{% url 'admin_logout' %}"
+               class="topbar-logout">
+
+                Logout
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <section class="content">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <div class="page-label">
+                Tool Management
+            </div>
+
+
+            <h1>
+                Edit Tool
+            </h1>
+
+
+            <p>
+                Update the details of this tool.
+            </p>
+
+        </div>
+
+
+
+        <!-- ================= FORM CARD ================= -->
+
+        <div class="form-card">
+
+
+            <!-- HEADER -->
+
+            <div class="form-card-header">
+
+
+                <div class="header-icon">
+
+                    <i class="fa-solid fa-pen-to-square"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        Tool Details
+                    </h2>
+
+                    <p>
+                        Make changes to the selected tool.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- FORM -->
+
+            <form method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+
+
+                <!-- TOOL NAME -->
+
+                <div class="form-group">
+
+                    <label for="name">
+
+                        Tool Name
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value="{{ tool.name }}"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- CATEGORY -->
+
+                <div class="form-group">
+
+                    <label for="category">
+
+                        Category
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <select
+                        id="category"
+                        name="category"
+                        required
+                    >
+
+                        <option value="Power Tools"
+                            {% if tool.category == "Power Tools" %}selected{% endif %}>
+                            Power Tools
+                        </option>
+
+                        <option value="Hand Tools"
+                            {% if tool.category == "Hand Tools" %}selected{% endif %}>
+                            Hand Tools
+                        </option>
+
+                        <option value="Garden Tools"
+                            {% if tool.category == "Garden Tools" %}selected{% endif %}>
+                            Garden Tools
+                        </option>
+
+                        <option value="Construction Tools"
+                            {% if tool.category == "Construction Tools" %}selected{% endif %}>
+                            Construction Tools
+                        </option>
+
+                        <option value="Electrical Tools"
+                            {% if tool.category == "Electrical Tools" %}selected{% endif %}>
+                            Electrical Tools
+                        </option>
+
+                        <option value="Other"
+                            {% if tool.category == "Other" %}selected{% endif %}>
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- PRICE + COUNT -->
+
+                <div class="form-row">
+
+
+                    <!-- PRICE -->
+
+                    <div class="form-group">
+
+                        <label for="price_per_day">
+
+                            Price Per Day (₹)
+                            <span class="required">*</span>
+
+                        </label>
+
+
+                        <input
+                            type="number"
+                            id="price_per_day"
+                            name="price_per_day"
+                            value="{{ tool.price_per_day }}"
+                            min="0"
+                            step="0.01"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- COUNT -->
+
+                    <div class="form-group">
+
+                        <label for="count">
+
+                            Available Copies
+                            <span class="required">*</span>
+
+                        </label>
+
+
+                        <input
+                            type="number"
+                            id="count"
+                            name="count"
+                            value="{{ tool.count }}"
+                            min="0"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- INVENTORY NOTE -->
+
+                <div class="inventory-note">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    <div>
+
+                        <strong>
+                            Inventory:
+                        </strong>
+
+                        Available copies are reduced when a rental is approved
+                        and returned when an approved or active rental is completed
+                        or cancelled.
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label for="description">
+
+                        Description
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        required
+                    >{{ tool.description }}</textarea>
+
+                </div>
+
+
+
+                <!-- CURRENT IMAGE -->
+
+                {% if tool.image %}
+
+                    <div class="form-group">
+
+                        <label>
+                            Current Image
+                        </label>
+
+
+                        <div class="current-image">
+
+                            <img
+                                src="{{ tool.image.url }}"
+                                alt="{{ tool.name }}"
+                            >
+
+
+                            <p>
+                                Upload a new image below to replace the current image.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+
+                <!-- NEW IMAGE -->
+
+                <div class="form-group">
+
+                    <label for="image">
+
+                        Change Image
+
+                    </label>
+
+
+                    <input
+                        type="file"
+                        id="image"
+                        name="image"
+                        accept="image/*"
+                    >
+
+                </div>
+
+
+
+                <!-- BUTTONS -->
+
+                <div class="buttons">
+
+
+                    <button
+                        type="submit"
+                        class="btn save-btn"
+                    >
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Save Changes
+
+                    </button>
+
+
+                    <a
+                        href="{% url 'view_tool' %}"
+                        class="btn cancel-btn"
+                    >
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Cancel
+
+                    </a>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <strong>
+            Tool<span>Box</span>
+        </strong>
+
+        &nbsp; • &nbsp;
+
+        © 2026 ToolBox. Admin Panel.
+
+    </footer>
+
+
+</main>
+
+
+</body>
+
+</html>

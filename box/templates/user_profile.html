@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ToolBox | My Profile</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                Roboto, Helvetica, Arial, sans-serif;
+
+            color: #f5f1f4;
+
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                #0f0e13;
+
+            background-size: 42px 42px;
+
+            min-height: 100vh;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            width: 100%;
+
+            background: rgba(15, 14, 19, 0.94);
+            border-bottom: 1px solid #302a33;
+
+            padding: 18px 45px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .logo {
+            color: white;
+
+            font-size: 24px;
+            font-weight: 800;
+
+            text-decoration: none;
+
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            color: #dca2c4;
+            margin-right: 8px;
+        }
+
+        .logo span {
+            color: #dca2c4;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+
+            gap: 7px;
+
+            color: #aaa1ab;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            padding: 9px 13px;
+
+            border-radius: 999px;
+
+            transition: 0.25s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #ffffff;
+            background: rgba(199, 122, 165, 0.13);
+        }
+
+        .nav-links a.active {
+            color: #dca2c4;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 92%;
+            max-width: 760px;
+
+            margin: 50px auto;
+        }
+
+        /* ================= PROFILE CARD ================= */
+
+        .profile-card {
+            background:
+                radial-gradient(circle at 50% 0%,
+                    rgba(199, 122, 165, 0.12),
+                    transparent 35%),
+                rgba(23, 21, 28, 0.94);
+
+            border: 1px solid #302a33;
+
+            border-radius: 24px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 20px 55px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ================= PROFILE HEADER ================= */
+
+        .profile-header {
+            text-align: center;
+
+            margin-bottom: 35px;
+
+            padding-bottom: 30px;
+
+            border-bottom: 1px solid #302a33;
+        }
+
+        .profile-icon {
+            width: 92px;
+            height: 92px;
+
+            margin: auto;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(135deg,
+                    #c77aa5,
+                    #8d536f);
+
+            color: #17151c;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 36px;
+
+            box-shadow:
+                0 12px 30px rgba(199, 122, 165, 0.18);
+        }
+
+        .profile-header h1 {
+            margin-top: 17px;
+
+            color: #f5f1f4;
+
+            font-size: 27px;
+            font-weight: 800;
+        }
+
+        .profile-header p {
+            margin-top: 6px;
+
+            color: #aaa1ab;
+
+            font-size: 13px;
+        }
+
+        /* ================= PROFILE INFORMATION ================= */
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+
+            gap: 14px;
+        }
+
+        .info-box {
+            background: #211e25;
+
+            border: 1px solid #39323c;
+
+            border-radius: 16px;
+
+            padding: 17px 19px;
+
+            transition: 0.25s ease;
+        }
+
+        .info-box:hover {
+            border-color: #493542;
+
+            background: #241f27;
+        }
+
+        .info-label {
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+
+            color: #9e95a0;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.4px;
+
+            margin-bottom: 7px;
+        }
+
+        .info-label i {
+            color: #dca2c4;
+        }
+
+        .info-value {
+            color: #f0ebf0;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            word-break: break-word;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .buttons {
+            margin-top: 30px;
+
+            display: flex;
+
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+
+            padding: 13px 18px;
+
+            border-radius: 999px;
+
+            text-decoration: none;
+
+            text-align: center;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            transition: 0.25s ease;
+        }
+
+        .edit-btn {
+            background: #c77aa5;
+            color: #17151c;
+
+            box-shadow:
+                0 8px 22px rgba(199, 122, 165, 0.16);
+        }
+
+        .edit-btn:hover {
+            background: #dca2c4;
+
+            transform: translateY(-2px);
+        }
+
+        .dashboard-btn {
+            background: transparent;
+
+            color: #d2cbd3;
+
+            border: 1px solid #493542;
+        }
+
+        .dashboard-btn:hover {
+            background: rgba(199, 122, 165, 0.10);
+
+            color: #dca2c4;
+
+            border-color: #c77aa5;
+
+            transform: translateY(-2px);
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            margin-top: 60px;
+
+            background: #0b0a0f;
+
+            border-top: 1px solid #302a33;
+
+            padding: 28px 20px 22px;
+
+            color: #9e95a0;
+        }
+
+        .footer-content {
+            max-width: 1180px;
+            margin: auto;
+
+            text-align: center;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            color: #f5f1f4;
+
+            font-size: 18px;
+
+            margin-bottom: 8px;
+        }
+
+        .footer-brand i {
+            color: #dca2c4;
+        }
+
+        .footer-brand strong {
+            color: #dca2c4;
+        }
+
+        .footer-content p {
+            color: #9e95a0;
+
+            font-size: 12px;
+
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-bottom: 18px;
+        }
+
+        .footer-links a {
+            color: #aaa1ab;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            transition: 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #dca2c4;
+        }
+
+        .footer-links span {
+            color: #493542;
+            font-size: 10px;
+        }
+
+        .footer-bottom {
+            padding-top: 16px;
+
+            border-top: 1px solid #252129;
+
+            color: #77707a;
+
+            font-size: 11px;
+        }
+
+        .messages {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            background: rgba(166, 83, 128, 0.12);
+            border: 1px solid rgba(200, 117, 163, 0.30);
+            color: #e7bfd5;
+        }
+
+        .message.success {
+            background: rgba(34, 197, 94, 0.10);
+            border-color: rgba(34, 197, 94, 0.30);
+            color: #86efac;
+        }
+
+        .message.error {
+            background: rgba(239, 68, 68, 0.10);
+            border-color: rgba(239, 68, 68, 0.30);
+            color: #fca5a5;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 16px 22px;
+            }
+
+            .container {
+                width: 94%;
+                margin: 35px auto;
+            }
+
+            .profile-card {
+                padding: 30px 24px;
+
+                border-radius: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+            .nav-links {
+                width: 100%;
+
+                flex-wrap: wrap;
+
+                gap: 5px;
+            }
+
+            .nav-links a {
+                padding: 8px 10px;
+            }
+
+            .profile-header h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .container {
+                width: 94%;
+
+                margin: 25px auto;
+            }
+
+            .profile-card {
+                padding: 27px 20px;
+            }
+
+            .profile-icon {
+                width: 82px;
+                height: 82px;
+
+                font-size: 32px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <a href="{% url 'user_dashboard' %}" class="logo">
+
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+
+            Tool<span>Box</span>
+
+        </a>
+
+
+        <div class="nav-links">
+
+            <a href="{% url 'user_dashboard' %}">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Dashboard
+
+            </a>
+
+
+            <a href="{% url 'my_rentals' %}">
+
+                <i class="fa-solid fa-clipboard-list"></i>
+
+                My Rentals
+
+            </a>
+
+
+            <a href="{% url 'user_profile' %}" class="active">
+
+                <i class="fa-solid fa-user"></i>
+
+                Profile
+
+            </a>
+
+
+            <a href="{% url 'user_logout' %}">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </nav>
+   
+
+    <!-- ================= PROFILE ================= -->
+
+    <div class="container">
+
+
+ 
+
+
+        <div class="profile-card">
+
+
+            <!-- PROFILE HEADER -->
+
+            <div class="profile-header">
+
+                <div class="profile-icon">
+
+                    <i class="fa-solid fa-user"></i>
+
+                </div>
+
+                <h1>
+                    {{ customer.username }}
+                </h1>
+
+                <p>
+                    My Profile
+                </p>
+
+            </div>
+
+
+            <!-- PROFILE INFORMATION -->
+
+            <div class="profile-info">
+
+
+                <!-- USERNAME -->
+
+                <div class="info-box">
+
+                    <div class="info-label">
+
+                        <i class="fa-solid fa-user"></i>
+
+                        Username
+
+                    </div>
+
+                    <div class="info-value">
+
+                        {{ customer.username }}
+
+                    </div>
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="info-box">
+
+                    <div class="info-label">
+
+                        <i class="fa-solid fa-phone"></i>
+
+                        Phone Number
+
+                    </div>
+
+                    <div class="info-value">
+
+                        {{ customer.phone }}
+
+                    </div>
+
+                </div>
+
+
+                <!-- ADDRESS -->
+
+                <div class="info-box">
+
+                    <div class="info-label">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        Address
+
+                    </div>
+
+                    <div class="info-value">
+
+                        {{ customer.address }}
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="buttons">
+
+                <a href="{% url 'edit_profile' %}" class="btn edit-btn">
+
+                    <i class="fa-solid fa-pen"></i>
+
+                    Edit Profile
+
+                </a>
+
+
+                <a href="{% url 'user_dashboard' %}" class="btn dashboard-btn">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    Dashboard
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-content">
+
+            <div class="footer-brand">
+
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                <strong>ToolBox</strong>
+
+            </div>
+
+            <p>
+                Rent the tools you need. Get the job done.
+            </p>
+
+
+
+            <div class="footer-bottom">
+
+                © 2026 ToolBox. All rights reserved.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+</body>
+
+</html>

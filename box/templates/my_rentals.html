@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ToolBox | My Rentals</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                Roboto, Helvetica, Arial, sans-serif;
+
+            color: #f5f1f4;
+
+            background:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px),
+                #0f0e13;
+
+            background-size: 42px 42px;
+            min-height: 100vh;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            width: 100%;
+
+            background: rgba(15, 14, 19, 0.94);
+            border-bottom: 1px solid #302a33;
+
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+
+            padding: 18px 45px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .logo {
+            color: white;
+
+            font-size: 24px;
+            font-weight: 800;
+
+            text-decoration: none;
+
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            color: #dca2c4;
+            margin-right: 8px;
+        }
+
+        .logo span {
+            color: #dca2c4;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            color: #aaa1ab;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            padding: 9px 13px;
+
+            border-radius: 999px;
+
+            transition: 0.25s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #ffffff;
+            background: rgba(199, 122, 165, 0.13);
+        }
+
+        .nav-links a.active {
+            color: #dca2c4;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 92%;
+            max-width: 1180px;
+
+            margin: 42px auto;
+        }
+
+        /* ================= PAGE HEADER ================= */
+
+        .page-title {
+            background:
+                radial-gradient(
+                    circle at 90% 10%,
+                    rgba(199, 122, 165, 0.16),
+                    transparent 30%
+                ),
+                linear-gradient(135deg, #17151c, #211d26);
+
+            border: 1px solid #302a33;
+            border-radius: 24px;
+
+            color: white;
+
+            padding: 30px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
+        }
+
+        .page-title h1 {
+            color: #f5f1f4;
+
+            font-size: 30px;
+            font-weight: 800;
+
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #aaa1ab;
+            font-size: 14px;
+        }
+
+        /* ================= MESSAGES ================= */
+
+        .messages {
+            margin-bottom: 22px;
+        }
+
+        .message {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 13px 16px;
+
+            background: rgba(199, 122, 165, 0.10);
+            color: #e3b9cf;
+
+            border: 1px solid #493542;
+            border-radius: 14px;
+
+            margin-bottom: 10px;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* ================= RENTAL LIST ================= */
+
+        .rental-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .rental-card {
+            background: rgba(23, 21, 28, 0.92);
+
+            border: 1px solid #302a33;
+            border-radius: 20px;
+
+            padding: 24px;
+
+            transition: 0.25s ease;
+
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.16);
+        }
+
+        .rental-card:hover {
+            border-color: #493542;
+
+            box-shadow:
+                0 18px 40px rgba(0, 0, 0, 0.25);
+
+            transform: translateY(-2px);
+        }
+
+        /* ================= RENTAL HEADER ================= */
+
+        .rental-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 15px;
+
+            padding-bottom: 18px;
+
+            border-bottom: 1px solid #302a33;
+        }
+
+        .tool-title {
+            display: flex;
+            align-items: center;
+
+            gap: 11px;
+        }
+
+        .tool-icon {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(199, 122, 165, 0.10);
+
+            color: #dca2c4;
+
+            border: 1px solid #493542;
+            border-radius: 13px;
+
+            font-size: 17px;
+        }
+
+        .rental-header h2 {
+            color: #f5f1f4;
+
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        /* ================= STATUS ================= */
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 8px 13px;
+
+            background: #211e25;
+
+            border: 1px solid #39323c;
+
+            border-radius: 999px;
+
+            color: #d2cbd3;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+        .status i {
+            font-size: 7px;
+            color: #dca2c4;
+        }
+
+        /* ================= DETAILS ================= */
+
+        .rental-details {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 20px;
+
+            padding: 22px 0;
+        }
+
+        .detail label {
+            display: block;
+
+            color: #8f8791;
+
+            font-size: 10px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            margin-bottom: 7px;
+        }
+
+        .detail strong {
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            color: #e7e1e7;
+        }
+
+        .detail strong i {
+            color: #dca2c4;
+            font-size: 12px;
+        }
+
+        /* ================= RENTAL FOOTER ================= */
+
+        .rental-footer {
+            margin-top: 2px;
+
+            padding-top: 18px;
+
+            border-top: 1px solid #302a33;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 15px;
+        }
+
+        .total {
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+
+            font-size: 17px;
+            font-weight: 800;
+
+            color: #f5f1f4;
+        }
+
+        .total i {
+            color: #dca2c4;
+        }
+
+        /* ================= CANCEL ================= */
+
+        .cancel-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            background: transparent;
+            color: #d2cbd3;
+
+            border: 1px solid #493542;
+
+            padding: 10px 17px;
+
+            border-radius: 999px;
+
+            cursor: pointer;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            transition: 0.25s ease;
+        }
+
+        .cancel-btn:hover {
+            background: rgba(199, 122, 165, 0.12);
+            color: #e3b9cf;
+
+            border-color: #c77aa5;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            background: rgba(23, 21, 28, 0.92);
+
+            border: 1px solid #302a33;
+            border-radius: 20px;
+
+            padding: 65px 30px;
+
+            text-align: center;
+
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.16);
+        }
+
+        .empty-icon {
+            width: 62px;
+            height: 62px;
+
+            margin: 0 auto 17px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(199, 122, 165, 0.10);
+
+            color: #dca2c4;
+
+            border: 1px solid #493542;
+            border-radius: 17px;
+
+            font-size: 23px;
+        }
+
+        .empty h2 {
+            color: #f5f1f4;
+
+            font-size: 20px;
+
+            margin-bottom: 9px;
+        }
+
+        .empty p {
+            color: #aaa1ab;
+
+            margin-bottom: 22px;
+
+            font-size: 13px;
+        }
+
+        /* ================= BROWSE BUTTON ================= */
+
+        .browse-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            background: #c77aa5;
+            color: #17151c;
+
+            text-decoration: none;
+
+            padding: 11px 20px;
+
+            border-radius: 999px;
+
+            font-size: 13px;
+            font-weight: 800;
+
+            transition: 0.25s ease;
+        }
+
+        .browse-btn:hover {
+            background: #dca2c4;
+
+            transform: translateY(-2px);
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            margin-top: 60px;
+
+            background: #0b0a0f;
+
+            border-top: 1px solid #302a33;
+
+            padding: 28px 20px 22px;
+
+            color: #9e95a0;
+        }
+
+        .footer-content {
+            max-width: 1180px;
+            margin: auto;
+
+            text-align: center;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            color: #f5f1f4;
+
+            font-size: 18px;
+
+            margin-bottom: 8px;
+        }
+
+        .footer-brand i {
+            color: #dca2c4;
+        }
+
+        .footer-brand strong {
+            color: #dca2c4;
+        }
+
+        .footer-content p {
+            color: #9e95a0;
+
+            font-size: 12px;
+
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-bottom: 18px;
+        }
+
+        .footer-links a {
+            color: #aaa1ab;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            transition: 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #dca2c4;
+        }
+
+        .footer-links span {
+            color: #493542;
+            font-size: 10px;
+        }
+
+        .footer-bottom {
+            padding-top: 16px;
+
+            border-top: 1px solid #252129;
+
+            color: #77707a;
+
+            font-size: 11px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 800px) {
+
+            .navbar {
+                padding: 16px 22px;
+            }
+
+            .container {
+                width: 94%;
+                margin: 30px auto;
+            }
+
+            .rental-details {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+            .nav-links {
+                width: 100%;
+
+                gap: 5px;
+
+                flex-wrap: wrap;
+            }
+
+            .nav-links a {
+                padding: 8px 10px;
+            }
+
+            .page-title {
+                padding: 24px;
+
+                border-radius: 18px;
+            }
+
+            .page-title h1 {
+                font-size: 25px;
+            }
+
+            .rental-card {
+                padding: 20px;
+
+                border-radius: 17px;
+            }
+
+            .rental-header {
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .container {
+                width: 94%;
+
+                margin: 22px auto;
+            }
+
+            .rental-header {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .rental-details {
+                grid-template-columns: 1fr;
+
+                gap: 17px;
+            }
+
+            .rental-footer {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .cancel-btn {
+                width: 100%;
+            }
+
+            .browse-btn {
+                width: 100%;
+            }
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <a href="{% url 'user_dashboard' %}" class="logo">
+
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+
+            Tool<span>Box</span>
+
+        </a>
+
+
+        <div class="nav-links">
+
+            <!-- Dashboard -->
+
+            <a href="{% url 'user_dashboard' %}">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Dashboard
+
+            </a>
+
+
+            <!-- My Rentals - ACTIVE -->
+
+            <a href="{% url 'my_rentals' %}" class="active">
+
+                <i class="fa-solid fa-clipboard-list"></i>
+
+                My Rentals
+
+            </a>
+
+
+            <!-- Profile -->
+
+            <a href="{% url 'user_profile' %}">
+
+                <i class="fa-solid fa-user"></i>
+
+                Profile
+
+            </a>
+
+
+            <!-- Logout -->
+
+            <a href="{% url 'user_logout' %}">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <div class="container">
+
+
+        <!-- ================= PAGE HEADER ================= -->
+
+        <div class="page-title">
+
+            <h1>
+                My Rentals
+            </h1>
+
+            <p>
+                View and manage your tool rental requests.
+            </p>
+
+        </div>
+
+
+
+        <!-- ================= RENTALS ================= -->
+
+        {% if rentals %}
+
+        <div class="rental-list">
+
+
+            {% for rental in rentals %}
+
+            <div class="rental-card">
+
+
+                <!-- RENTAL HEADER -->
+
+                <div class="rental-header">
+
+
+                    <div class="tool-title">
+
+                        <div class="tool-icon">
+
+                            <i class="fa-solid fa-toolbox"></i>
+
+                        </div>
+
+                        <h2>
+                            {{ rental.tool.name }}
+                        </h2>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <span class="status">
+
+                        <i class="fa-solid fa-circle"></i>
+
+                        {{ rental.status }}
+
+                    </span>
+
+
+                </div>
+
+
+                <!-- RENTAL DETAILS -->
+
+                <div class="rental-details">
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="detail">
+
+                        <label>
+                            Category
+                        </label>
+
+                        <strong>
+
+                            <i class="fa-solid fa-folder"></i>
+
+                            {{ rental.tool.category }}
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- START DATE -->
+
+                    <div class="detail">
+
+                        <label>
+                            Start Date
+                        </label>
+
+                        <strong>
+
+                            <i class="fa-regular fa-calendar-days"></i>
+
+                            {{ rental.start_date }}
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- END DATE -->
+
+                    <div class="detail">
+
+                        <label>
+                            End Date
+                        </label>
+
+                        <strong>
+
+                            <i class="fa-regular fa-calendar-days"></i>
+
+                            {{ rental.end_date }}
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- TOTAL DAYS -->
+
+                    <div class="detail">
+
+                        <label>
+                            Total Days
+                        </label>
+
+                        <strong>
+
+                            <i class="fa-solid fa-clock"></i>
+
+                            {{ rental.total_days }}
+
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- RENTAL FOOTER -->
+
+                <div class="rental-footer">
+
+
+                    <!-- TOTAL PRICE -->
+
+                    <div class="total">
+
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                        Total: ₹{{ rental.total_price }}
+
+                    </div>
+
+
+                    <!-- CANCEL -->
+
+                    {% if rental.status == "Pending" %}
+
+                    <form method="POST"
+                        action="{% url 'cancel_rental' rental.id %}">
+
+                        {% csrf_token %}
+
+                        <button type="submit"
+                            class="cancel-btn"
+                            onclick="return confirm('Are you sure you want to cancel this rental?');">
+
+                            <i class="fa-solid fa-ban"></i>
+
+                            Cancel Rental
+
+                        </button>
+
+                    </form>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+
+            {% endfor %}
+
+
+        </div>
+
+
+        <!-- ================= NO RENTALS ================= -->
+
+        {% else %}
+
+        <div class="empty">
+
+
+            <div class="empty-icon">
+
+                <i class="fa-solid fa-clipboard-list"></i>
+
+            </div>
+
+
+            <h2>
+                No Rentals Yet
+            </h2>
+
+
+            <p>
+                You have not rented any tools yet.
+            </p>
+
+
+            <a href="{% url 'index' %}" class="browse-btn">
+
+                <i class="fa-solid fa-toolbox"></i>
+
+                Browse Tools
+
+            </a>
+
+
+        </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-content">
+
+            <div class="footer-brand">
+
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                <strong>ToolBox</strong>
+
+            </div>
+
+            <p>
+                Rent the tools you need. Get the job done.
+            </p>
+
+        
+
+            <div class="footer-bottom">
+
+                © 2026 ToolBox. All rights reserved.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+</body>
+
+</html>

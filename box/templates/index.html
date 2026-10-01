@@ -1,0 +1,1934 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ToolBox - Rent Tools Easily</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: "#0f0e13",
+                        dark2: "#15131a",
+                        dark3: "#1d1a22",
+                        pink: "#a65380",
+                        pinkLight: "#dca2c4",
+                        pinkDark: "#7c3d60"
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: #0f0e13;
+            color: #f5f2f5;
+        }
+
+        /* Grid background like reference website */
+        .grid-bg {
+            background-color: #0f0e13;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+            background-size: 48px 48px;
+        }
+
+        /* Soft pink glow */
+        .pink-glow {
+            background:
+                radial-gradient(circle at 50% 25%,
+                    rgba(166, 83, 128, 0.18),
+                    transparent 42%);
+        }
+
+        .hero-glow {
+            background:
+                radial-gradient(circle at 50% 40%,
+                    rgba(166, 83, 128, 0.16),
+                    transparent 45%),
+                radial-gradient(circle at 10% 20%,
+                    rgba(220, 162, 196, 0.07),
+                    transparent 30%);
+        }
+
+        /* Navbar glass effect */
+        .glass {
+            background: rgba(21, 19, 26, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        /* Pink gradient text */
+        .pink-text {
+            background: linear-gradient(90deg,
+                    #dca2c4,
+                    #a65380);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Search box */
+        .search-box {
+            box-shadow:
+                0 0 0 1px rgba(220, 162, 196, 0.45),
+                0 0 35px rgba(166, 83, 128, 0.12);
+        }
+
+        /* Cards */
+        .tool-card {
+            background: rgba(29, 26, 34, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(220, 162, 196, 0.35);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+        }
+
+        .category-card {
+            background: rgba(29, 26, 34, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(220, 162, 196, 0.35);
+        }
+
+        /* Buttons */
+        .pink-button {
+            background: #a65380;
+            transition: all 0.3s ease;
+        }
+
+        .pink-button:hover {
+            background: #b96491;
+            transform: translateY(-1px);
+        }
+
+        .outline-button {
+            border: 1px solid rgba(220, 162, 196, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .outline-button:hover {
+            background: rgba(166, 83, 128, 0.12);
+            border-color: rgba(220, 162, 196, 0.6);
+        }
+
+        /* Image overlay */
+        .image-overlay {
+            background: linear-gradient(to top,
+                    rgba(15, 14, 19, 0.85),
+                    transparent);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f0e13;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4a3040;
+            border-radius: 20px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a65380;
+        }
+    </style>
+</head>
+
+<body class="bg-dark">
+
+    <!-- ========================================================= -->
+    <!-- NAVBAR -->
+    <!-- ========================================================= -->
+
+    <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/10 glass">
+
+        <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+            <div class="h-20 flex items-center justify-between">
+
+                <!-- Logo -->
+                <a href="{% url 'index' %}" class="flex items-center gap-3">
+
+                    <div class="w-11 h-11 rounded-full
+                            bg-gradient-to-br from-pinkLight/30 to-pink/20
+                            border border-pinkLight/20
+                            flex items-center justify-center">
+
+                        <span class="text-pinkLight text-xl font-black">
+                            T
+                        </span>
+
+                    </div>
+
+                    <span class="text-2xl font-extrabold tracking-tight">
+                        Tool<span class="text-pinkLight">Box</span>
+                    </span>
+
+                </a>
+
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-10">
+
+                    <a href="#tools" class="text-sm font-medium text-gray-300 hover:text-white transition">
+                        Browse Tools
+                    </a>
+
+                    <a href="#categories" class="text-sm font-medium text-gray-300 hover:text-white transition">
+                        Categories
+                    </a>
+
+                    <a href="#how-it-works" class="text-sm font-medium text-gray-300 hover:text-white transition">
+                        How It Works
+                    </a>
+
+                    <a href="#about" class="text-sm font-medium text-gray-300 hover:text-white transition">
+                        About
+                    </a>
+
+                </div>
+
+
+                <!-- Right -->
+                <div class="flex items-center gap-3">
+
+                    <a href="{% url 'user_login' %}"
+                        class="hidden sm:block px-5 py-2.5 text-sm font-semibold text-gray-200 hover:text-white transition">
+                        Login
+                    </a>
+
+                    <a href="{% url 'user_register' %}"
+                        class="pink-button px-5 py-2.5 rounded-xl text-sm font-bold text-white">
+                        Sign Up
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ========================================================= -->
+    <!-- HERO -->
+    <!-- ========================================================= -->
+
+    <section class="relative min-h-screen grid-bg hero-glow pt-20 overflow-hidden">
+
+        <div class="absolute inset-0 pink-glow pointer-events-none"></div>
+
+
+        <div class="relative max-w-6xl mx-auto px-5 lg:px-8
+                min-h-[calc(100vh-80px)]
+                flex items-center justify-center">
+
+            <div class="w-full text-center py-24">
+
+                <!-- Small pill -->
+
+                <div class="inline-flex items-center gap-3
+                        px-5 py-2 rounded-full
+                        border border-pinkLight/20
+                        bg-pink/10
+                        text-sm text-gray-300
+                        mb-8">
+
+                    <span class="text-pinkLight">✦</span>
+
+                    <span>Buy Less → Rent More</span>
+
+                    <span class="text-pinkLight">→</span>
+
+                    <span class="text-pinkLight font-semibold">
+                        Rent It
+                    </span>
+
+                </div>
+
+
+                <!-- Main heading -->
+
+                <h1 class="text-5xl sm:text-6xl lg:text-8xl
+                       font-black tracking-tight
+                       leading-[0.95]
+                       max-w-5xl mx-auto">
+
+                    Why buy?
+
+                    <span class="block pink-text mt-3">
+                        Just Rent.
+                    </span>
+
+                </h1>
+
+
+                <!-- Description -->
+
+                <p class="mt-8 max-w-2xl mx-auto
+                      text-base sm:text-lg
+                      leading-8
+                      text-gray-400">
+
+                    A simple marketplace to rent construction tools,
+                    gardening equipment, electrical tools and more.
+                    Get the tools you need without buying them.
+
+                </p>
+
+
+                <!-- Search -->
+
+               
+
+
+                <!-- Popular searches -->
+
+                <div class="mt-7 flex flex-wrap justify-center items-center gap-3">
+
+                    <span class="text-sm text-gray-500">
+                        Popular:
+                    </span>
+
+                    <span class="px-4 py-2 rounded-full
+                             bg-white/5
+                             border border-white/10
+                             text-sm text-gray-400">
+                        Drills
+                    </span>
+
+                    <span class="px-4 py-2 rounded-full
+                             bg-white/5
+                             border border-white/10
+                             text-sm text-gray-400">
+                        Grinders
+                    </span>
+
+                    
+
+                    <span class="px-4 py-2 rounded-full
+                             bg-white/5
+                             border border-white/10
+                             text-sm text-gray-400">
+                        Gardening
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================================= -->
+    <!-- CATEGORIES -->
+    <!-- ========================================================= -->
+
+    <section id="categories" class="relative py-24 border-t border-white/5 bg-dark">
+
+        <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+            <div class="flex flex-col md:flex-row
+                    md:items-end
+                    md:justify-between
+                    gap-5 mb-12">
+
+                <div>
+
+                    <p class="text-pinkLight text-sm font-semibold uppercase tracking-[0.2em]">
+                        Explore
+                    </p>
+
+                    <h2 class="text-4xl md:text-5xl font-black mt-3">
+                        Browse Categories
+                    </h2>
+
+                </div>
+
+                <p class="text-gray-500 max-w-md">
+                    Find the right equipment for your work,
+                    project or weekend task.
+                </p>
+
+            </div>
+
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+                <!-- Category 1 -->
+
+                <a href="#tools" class="category-card rounded-3xl overflow-hidden group">
+
+                    <div class="h-52 relative overflow-hidden">
+
+                        <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=900&q=80"
+                            class="w-full h-full object-cover
+                               group-hover:scale-105 transition duration-500" alt="Construction Tools">
+
+                        <div class="absolute inset-0 image-overlay"></div>
+
+                        <div class="absolute bottom-5 left-5">
+
+                            <p class="text-white text-xl font-bold">
+                                Construction
+                            </p>
+
+                            <p class="text-gray-300 text-sm mt-1">
+                                Tools & Equipment
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <!-- Category 2 -->
+
+                <a href="#tools" class="category-card rounded-3xl overflow-hidden group">
+
+                    <div class="h-52 relative overflow-hidden">
+
+                        <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=900&q=80"
+                            class="w-full h-full object-cover
+                               group-hover:scale-105 transition duration-500" alt="Gardening Tools">
+
+                        <div class="absolute inset-0 image-overlay"></div>
+
+                        <div class="absolute bottom-5 left-5">
+
+                            <p class="text-white text-xl font-bold">
+                                Gardening
+                            </p>
+
+                            <p class="text-gray-300 text-sm mt-1">
+                                Garden Equipment
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <!-- Category 3 -->
+
+                <a href="#tools" class="category-card rounded-3xl overflow-hidden group">
+
+                    <div class="h-52 relative overflow-hidden">
+
+                        <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=900&q=80"
+                            class="w-full h-full object-cover
+                               group-hover:scale-105 transition duration-500" alt="Electrical Tools">
+
+                        <div class="absolute inset-0 image-overlay"></div>
+
+                        <div class="absolute bottom-5 left-5">
+
+                            <p class="text-white text-xl font-bold">
+                                Electrical
+                            </p>
+
+                            <p class="text-gray-300 text-sm mt-1">
+                                Electrical Tools
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <!-- Category 4 -->
+
+                <a href="#tools" class="category-card rounded-3xl overflow-hidden group">
+
+                    <div class="h-52 relative overflow-hidden">
+
+                        <img src="https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=900&q=80"
+                            class="w-full h-full object-cover
+                               group-hover:scale-105 transition duration-500" alt="Automotive Tools">
+
+                        <div class="absolute inset-0 image-overlay"></div>
+
+                        <div class="absolute bottom-5 left-5">
+
+                            <p class="text-white text-xl font-bold">
+                                Automotive
+                            </p>
+
+                            <p class="text-gray-300 text-sm mt-1">
+                                Vehicle Tools
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================================= -->
+    <!-- FEATURED TOOLS -->
+    <!-- ONLY LIMITED TOOLS ON INDEX -->
+    <!-- ========================================================= -->
+
+    <section id="tools" class="relative py-24
+                border-t border-white/5
+                grid-bg">
+
+        <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+
+            <div class="flex flex-col md:flex-row
+                    md:items-end
+                    md:justify-between
+                    gap-5 mb-12">
+
+                <div>
+
+                    <p class="text-pinkLight text-sm font-semibold uppercase tracking-[0.2em]">
+                        Featured
+                    </p>
+
+                    <h2 class="text-4xl md:text-5xl font-black mt-3">
+                        Popular Tools
+                    </h2>
+
+                    <p class="text-gray-500 mt-4 max-w-xl">
+                        A few tools to get you started.
+                        Login to browse all available tools.
+                    </p>
+
+                </div>
+
+
+                <a href="{% url 'user_login' %}" class="outline-button
+                      rounded-full
+                      px-6 py-3
+                      text-sm
+                      font-semibold
+                      text-gray-300
+                      inline-flex
+                      items-center
+                      gap-2">
+
+                    View All Tools
+
+                    <span>→</span>
+
+                </a>
+
+            </div>
+
+
+
+            <div class="mt-14
+                    rounded-3xl
+                    border border-pinkLight/15
+                    bg-gradient-to-r
+                    from-pink/10
+                    to-transparent
+                    p-8 md:p-10
+                    flex flex-col md:flex-row
+                    items-center
+                    justify-between
+                    gap-6">
+
+                <div>
+
+                    <h3 class="text-2xl font-bold">
+                        Want to see all tools?
+                    </h3>
+
+                    <p class="text-gray-500 mt-2">
+                        Login to your ToolBox account to browse
+                        the complete collection.
+                    </p>
+
+                </div>
+
+
+                <a href="{% url 'user_login' %}" class="pink-button
+                      rounded-xl
+                      px-7 py-3.5
+                      font-bold
+                      whitespace-nowrap">
+
+                    Browse All Tools →
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================================= -->
+    <!-- WHY TOOLBOX -->
+    <!-- ========================================================= -->
+
+    <section class="relative py-24 border-t border-white/5 bg-dark2">
+
+        <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+            <div class="text-center max-w-3xl mx-auto">
+
+                <p class="text-pinkLight text-sm font-semibold uppercase tracking-[0.2em]">
+                    Why ToolBox
+                </p>
+
+                <h2 class="text-4xl md:text-5xl font-black mt-3">
+                    Tools when you need them.
+                </h2>
+
+                <p class="text-gray-500 mt-5 leading-7">
+                    Don't spend money buying equipment you only need
+                    occasionally. Rent what you need and return it when
+                    your work is done.
+                </p>
+
+            </div>
+
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14">
+
+
+                <!-- Card 1 -->
+
+                <div class="rounded-3xl
+                        border border-white/10
+                        bg-dark3
+                        p-8">
+
+                    <div class="w-12 h-12
+                            rounded-2xl
+                            bg-pink/10
+                            border border-pinkLight/10
+                            flex items-center justify-center
+                            text-pinkLight
+                            text-xl">
+
+                        ✓
+
+                    </div>
+
+                    <h3 class="text-xl font-bold mt-6">
+                        Save Money
+                    </h3>
+
+                    <p class="text-gray-500
+                          leading-7
+                          text-sm
+                          mt-3">
+
+                        Rent equipment instead of purchasing
+                        expensive tools for occasional work.
+
+                    </p>
+
+                </div>
+
+
+                <!-- Card 2 -->
+
+                <div class="rounded-3xl
+                        border border-white/10
+                        bg-dark3
+                        p-8">
+
+                    <div class="w-12 h-12
+                            rounded-2xl
+                            bg-pink/10
+                            border border-pinkLight/10
+                            flex items-center justify-center
+                            text-pinkLight
+                            text-xl">
+
+                        ⚡
+
+                    </div>
+
+                    <h3 class="text-xl font-bold mt-6">
+                        Easy Booking
+                    </h3>
+
+                    <p class="text-gray-500
+                          leading-7
+                          text-sm
+                          mt-3">
+
+                        Select the tool, choose your rental dates
+                        and submit your request easily.
+
+                    </p>
+
+                </div>
+
+
+                <!-- Card 3 -->
+
+                <div class="rounded-3xl
+                        border border-white/10
+                        bg-dark3
+                        p-8">
+
+                    <div class="w-12 h-12
+                            rounded-2xl
+                            bg-pink/10
+                            border border-pinkLight/10
+                            flex items-center justify-center
+                            text-pinkLight
+                            text-xl">
+
+                        🛠
+
+                    </div>
+
+                    <h3 class="text-xl font-bold mt-6">
+                        Right Equipment
+                    </h3>
+
+                    <p class="text-gray-500
+                          leading-7
+                          text-sm
+                          mt-3">
+
+                        Find construction, gardening, electrical
+                        and other useful tools in one place.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================================= -->
+    <!-- HOW IT WORKS -->
+    <!-- ========================================================= -->
+
+    <section id="how-it-works" class="relative py-24 grid-bg border-t border-white/5">
+
+        <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+            <div class="text-center">
+
+                <p class="text-pinkLight text-sm font-semibold uppercase tracking-[0.2em]">
+                    Simple Process
+                </p>
+
+                <h2 class="text-4xl md:text-5xl font-black mt-3">
+                    How ToolBox Works
+                </h2>
+
+            </div>
+
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+
+
+                <!-- Step 1 -->
+
+                <div class="text-center">
+
+                    <div class="mx-auto w-16 h-16
+                            rounded-full
+                            border border-pinkLight/30
+                            bg-pink/10
+                            flex items-center justify-center
+                            text-pinkLight
+                            text-xl
+                            font-bold">
+
+                        01
+
+                    </div>
+
+                    <h3 class="text-xl font-bold mt-6">
+                        Find a Tool
+                    </h3>
+
+                    <p class="text-gray-500
+                          text-sm
+                          leading-7
+                          mt-3
+                          max-w-sm
+                          mx-auto">
+
+                        Browse available tools and choose
+                        the equipment you need.
+
+                    </p>
+
+                </div>
+
+
+                <!-- Step 2 -->
+
+                <div class="text-center">
+
+                    <div class="mx-auto w-16 h-16
+                            rounded-full
+                            border border-pinkLight/30
+                            bg-pink/10
+                            flex items-center justify-center
+                            text-pinkLight
+                            text-xl
+                            font-bold">
+
+                        02
+
+                    </div>
+
+                    <h3 class="text-xl font-bold mt-6">
+                        Choose Dates
+                    </h3>
+
+                    <p class="text-gray-500
+                          text-sm
+                          leading-7
+                          mt-3
+                          max-w-sm
+                          mx-auto">
+
+                        Select your start and end dates
+                        and submit a rental request.
+
+                    </p>
+
+                </div>
+
+
+                <!-- Step 3 -->
+
+                <div class="text-center">
+
+                    <div class="mx-auto w-16 h-16
+                            rounded-full
+                            border border-pinkLight/30
+                            bg-pink/10
+                            flex items-center justify-center
+                            text-pinkLight
+                            text-xl
+                            font-bold">
+
+                        03
+
+                    </div>
+
+                    <h3 class="text-xl font-bold mt-6">
+                        Get the Job Done
+                    </h3>
+
+                    <p class="text-gray-500
+                          text-sm
+                          leading-7
+                          mt-3
+                          max-w-sm
+                          mx-auto">
+
+                        Get your approved tool, complete
+                        your work and return it.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================================= -->
+    <!-- ABOUT / CTA -->
+    <!-- ========================================================= -->
+
+    <section id="about" class="relative py-24 bg-dark2 border-t border-white/5">
+
+        <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+            <div class="rounded-[2rem]
+                    overflow-hidden
+                    border border-white/10
+                    bg-dark3
+                    grid grid-cols-1 lg:grid-cols-2">
+
+                
+
+                <!-- ABOUT IMAGE -->
+
+<div class="relative min-h-[420px] lg:min-h-[520px] overflow-hidden">
+
+    <img
+        src="{% static 'img/about-tools.jpg' %}"
+        alt="Man using tools"
+        class="absolute inset-0
+               w-full h-full
+               object-cover"
+    >
+
+    <!-- Dark overlay -->
+
+    <div class="absolute inset-0
+                bg-gradient-to-r
+                from-transparent
+                via-black/10
+                to-[#15131a]/90
+                lg:to-[#15131a]">
+    </div>
+
+
+    <!-- Small information card -->
+
+    <div class="absolute
+                bottom-6
+                left-6
+                right-6
+                bg-[#0f0e13]/85
+                backdrop-blur-xl
+                border border-white/10
+                rounded-2xl
+                p-5">
+
+        <div class="flex items-center
+                    justify-between">
+
+            <div>
+
+                <p class="text-xs
+                          uppercase
+                          tracking-[0.2em]
+                          text-[#dca2c4]">
+
+                    ToolBox
+
+                </p>
+
+                <p class="text-white
+                          font-bold
+                          text-lg
+                          mt-1">
+
+                    The right tool for every job
+
+                </p>
+
+            </div>
+
+            <div class="w-11 h-11
+                        rounded-full
+                        bg-[#8f426d]
+                        flex items-center
+                        justify-center
+                        text-white
+                        text-xl">
+
+                →
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+                <!-- Content -->
+
+                <div class="p-10 lg:p-14 flex flex-col justify-center">
+
+                    <p class="text-pinkLight
+                          text-sm
+                          font-semibold
+                          uppercase
+                          tracking-[0.2em]">
+
+                        About ToolBox
+
+                    </p>
+
+                    <h2 class="text-4xl
+                           md:text-5xl
+                           font-black
+                           mt-4
+                           leading-tight">
+
+                        Don't buy it.
+                        <span class="pink-text">
+                            Rent it.
+                        </span>
+
+                    </h2>
+
+                    <p class="text-gray-500
+                          leading-7
+                          mt-6">
+
+                        ToolBox makes it easier to access useful
+                        equipment without the cost of owning it.
+                        Whether you're working on a construction
+                        project, maintaining your garden or handling
+                        a home repair, find the tools you need.
+
+                    </p>
+
+                    <div class="mt-8">
+
+                        <a href="{% url 'user_login' %}" class="pink-button
+                              inline-flex
+                              items-center
+                              gap-3
+                              rounded-xl
+                              px-7 py-3.5
+                              font-bold">
+
+                            Get Started
+
+                            <span>→</span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================================= -->
+    <!-- FINAL CTA -->
+    <!-- ========================================================= -->
+
+    <section class="relative py-24 grid-bg border-t border-white/5">
+
+        <div class="max-w-4xl mx-auto
+                px-5
+                text-center">
+
+            <div class="inline-flex
+                    px-4 py-2
+                    rounded-full
+                    border border-pinkLight/20
+                    bg-pink/10
+                    text-pinkLight
+                    text-sm
+                    font-semibold">
+
+                Start Renting Today
+
+            </div>
+
+            <h2 class="text-4xl
+                   md:text-6xl
+                   font-black
+                   mt-6
+                   leading-tight">
+
+                The tool you need
+                <span class="pink-text">
+                    is waiting.
+                </span>
+
+            </h2>
+
+            <p class="text-gray-500
+                  max-w-xl
+                  mx-auto
+                  mt-6
+                  leading-7">
+
+                Create your account and browse the complete
+                collection of tools available on ToolBox.
+
+            </p>
+
+            <div class="mt-9">
+
+                <a href="{% url 'user_login' %}" class="pink-button
+                      inline-flex
+                      items-center
+                      gap-3
+                      rounded-xl
+                      px-8 py-4
+                      font-bold">
+
+                    Browse All Tools
+
+                    <span class="text-xl">
+                        →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================================= -->
+    <!-- FOOTER -->
+    <!-- ========================================================= -->
+
+
+
+    <footer class="relative bg-[#0b0a0e] border-t border-white/10">
+
+        <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+           
+
+            <!-- ================================================= -->
+            <!-- MAIN FOOTER -->
+            <!-- ================================================= -->
+
+            <div class="py-16
+                    grid
+                    grid-cols-1
+                    sm:grid-cols-2
+                    lg:grid-cols-5
+                    gap-12
+                    lg:gap-10">
+
+
+                <!-- ================================================= -->
+                <!-- BRAND -->
+                <!-- ================================================= -->
+
+                <div class="lg:col-span-2">
+
+                    <!-- Logo -->
+
+                    <a href="{% url 'index' %}" class="inline-flex items-center gap-3">
+
+                        <div class="w-12 h-12
+                                rounded-full
+                                bg-gradient-to-br
+                                from-[#dca2c4]/30
+                                to-[#8f426d]/20
+                                border
+                                border-[#dca2c4]/20
+                                flex
+                                items-center
+                                justify-center">
+
+                            <span class="text-[#dca2c4]
+                                     text-2xl
+                                     font-black">
+
+                                T
+
+                            </span>
+
+                        </div>
+
+                        <span class="text-3xl
+                                 font-black
+                                 tracking-tight">
+
+                            Tool<span class="text-[#dca2c4]">
+                                Box
+                            </span>
+
+                        </span>
+
+                    </a>
+
+
+                    <!-- Description -->
+
+                    <p class="text-gray-500
+                          leading-7
+                          mt-6
+                          max-w-md">
+
+                        ToolBox is a tool rental platform that helps
+                        you find and rent the equipment you need for
+                        construction, gardening, electrical work,
+                        automotive work and everyday projects.
+
+                    </p>
+
+
+                    <!-- Rental-focused information -->
+
+                    <div class="mt-7 space-y-4">
+
+
+                        <!-- Location -->
+
+                        <div class="flex items-center gap-3
+                                text-gray-500">
+
+                            <div class="w-9 h-9
+                                    rounded-lg
+                                    bg-white/5
+                                    border border-white/5
+                                    flex items-center justify-center
+                                    text-[#dca2c4]">
+
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                        d="M12 21s7-5.2 7-11a7 7 0 10-14 0c0 5.8 7 11 7 11z">
+                                    </path>
+
+                                    <circle cx="12" cy="10" r="2.5">
+                                    </circle>
+
+                                </svg>
+
+                            </div>
+
+                            <span class="text-sm">
+                                Thrissur, Kerala, India
+                            </span>
+
+                        </div>
+
+
+                        <!-- Email -->
+
+                        <div class="flex items-center gap-3
+                                text-gray-500">
+
+                            <div class="w-9 h-9
+                                    rounded-lg
+                                    bg-white/5
+                                    border border-white/5
+                                    flex items-center justify-center
+                                    text-[#dca2c4]">
+
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                        d="M4 5h16a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1z">
+                                    </path>
+
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                        d="M4 7l8 6 8-6">
+                                    </path>
+
+                                </svg>
+
+                            </div>
+
+                            <span class="text-sm">
+                                support@toolbox.com
+                            </span>
+
+                        </div>
+
+
+                        <!-- Phone -->
+
+                        <div class="flex items-center gap-3
+                                text-gray-500">
+
+                            <div class="w-9 h-9
+                                    rounded-lg
+                                    bg-white/5
+                                    border border-white/5
+                                    flex items-center justify-center
+                                    text-[#dca2c4]">
+
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                        d="M5 4h3l2 5-2 1.5a12 12 0 005.5 5.5L15 14l5 2v3a1 1 0 01-1 1C10.6 20 4 13.4 4 5a1 1 0 011-1z">
+                                    </path>
+
+                                </svg>
+
+                            </div>
+
+                            <span class="text-sm">
+                                +91 98765 43210
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Social -->
+
+                    <div class="flex gap-3 mt-8">
+
+                        <a href="#" class="w-11 h-11
+                              rounded-xl
+                              bg-[#1d1a22]
+                              border border-white/5
+                              flex items-center justify-center
+                              text-gray-500
+                              hover:text-[#dca2c4]
+                              hover:border-[#a65380]/40
+                              transition">
+
+                            <span class="font-bold">
+                                f
+                            </span>
+
+                        </a>
+
+
+                        <a href="#" class="w-11 h-11
+                              rounded-xl
+                              bg-[#1d1a22]
+                              border border-white/5
+                              flex items-center justify-center
+                              text-gray-500
+                              hover:text-[#dca2c4]
+                              hover:border-[#a65380]/40
+                              transition">
+
+                            <span class="font-bold">
+                                X
+                            </span>
+
+                        </a>
+
+
+                        <a href="#" class="w-11 h-11
+                              rounded-xl
+                              bg-[#1d1a22]
+                              border border-white/5
+                              flex items-center justify-center
+                              text-gray-500
+                              hover:text-[#dca2c4]
+                              hover:border-[#a65380]/40
+                              transition">
+
+                            <span class="font-bold">
+                                ◎
+                            </span>
+
+                        </a>
+
+
+                        <a href="#" class="w-11 h-11
+                              rounded-xl
+                              bg-[#1d1a22]
+                              border border-white/5
+                              flex items-center justify-center
+                              text-gray-500
+                              hover:text-[#dca2c4]
+                              hover:border-[#a65380]/40
+                              transition">
+
+                            <span class="font-bold">
+                                in
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- RENT WITH TOOLBOX -->
+                <!-- ================================================= -->
+
+                <div>
+
+                    <h4 class="text-white
+                           font-bold
+                           text-lg">
+
+                        Rent With ToolBox
+
+                    </h4>
+
+
+                    <ul class="mt-6 space-y-4">
+
+                        <li>
+                            <a href="#tools" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Browse Tools
+
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#categories" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Tool Categories
+
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#how-it-works" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                How Renting Works
+
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'user_login' %}" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Create Account
+
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'user_login' %}" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Login
+
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Rental Guidelines
+
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- TOOL CATEGORIES -->
+                <!-- ================================================= -->
+
+                <div>
+
+                    <h4 class="text-white
+                           font-bold
+                           text-lg">
+
+                        Tool Categories
+
+                    </h4>
+
+
+                    <ul class="mt-6 space-y-4">
+
+                        <li>
+                            <a href="#categories" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Construction Tools
+
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#categories" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Gardening Tools
+
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#categories" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Electrical Tools
+
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#categories" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Automotive Tools
+
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#categories" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Power Tools
+
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#categories" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Hand Tools
+
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- SUPPORT -->
+                <!-- ================================================= -->
+
+                <div>
+
+                    <h4 class="text-white
+                           font-bold
+                           text-lg">
+
+                        Support
+
+                    </h4>
+
+
+                    <ul class="mt-6 space-y-4">
+
+                        <li>
+                            <a href="#" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Help Center
+
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Rental FAQs
+
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Contact Us
+
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Rental Support
+
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Cancellation Policy
+
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="text-gray-500
+                                  hover:text-gray-200
+                                  text-sm
+                                  transition">
+
+                                Report an Issue
+
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- RENTAL FEATURES STRIP -->
+            <!-- ================================================= -->
+
+            <div class="border-t border-white/10
+                    border-b border-white/10
+                    py-8">
+
+                <div class="grid grid-cols-1
+                        sm:grid-cols-2
+                        lg:grid-cols-4
+                        gap-6">
+
+
+                    <div class="flex items-center gap-4">
+
+                        <div class="w-11 h-11
+                                rounded-xl
+                                bg-[#a65380]/10
+                                border border-[#a65380]/20
+                                flex items-center justify-center
+                                text-[#dca2c4]">
+
+                            ✓
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-white
+                                  font-semibold
+                                  text-sm">
+
+                                Easy Rental
+
+                            </p>
+
+                            <p class="text-gray-600
+                                  text-xs
+                                  mt-1">
+
+                                Simple booking process
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="flex items-center gap-4">
+
+                        <div class="w-11 h-11
+                                rounded-xl
+                                bg-[#a65380]/10
+                                border border-[#a65380]/20
+                                flex items-center justify-center
+                                text-[#dca2c4]">
+
+                            ₹
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-white
+                                  font-semibold
+                                  text-sm">
+
+                                Pay Per Day
+
+                            </p>
+
+                            <p class="text-gray-600
+                                  text-xs
+                                  mt-1">
+
+                                Rent only when needed
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="flex items-center gap-4">
+
+                        <div class="w-11 h-11
+                                rounded-xl
+                                bg-[#a65380]/10
+                                border border-[#a65380]/20
+                                flex items-center justify-center
+                                text-[#dca2c4]">
+
+                            🛠
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-white
+                                  font-semibold
+                                  text-sm">
+
+                                Wide Tool Selection
+
+                            </p>
+
+                            <p class="text-gray-600
+                                  text-xs
+                                  mt-1">
+
+                                Tools for every project
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="flex items-center gap-4">
+
+                        <div class="w-11 h-11
+                                rounded-xl
+                                bg-[#a65380]/10
+                                border border-[#a65380]/20
+                                flex items-center justify-center
+                                text-[#dca2c4]">
+
+                            ♻
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-white
+                                  font-semibold
+                                  text-sm">
+
+                                Return After Use
+
+                            </p>
+
+                            <p class="text-gray-600
+                                  text-xs
+                                  mt-1">
+
+                                No long-term ownership
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- BOTTOM -->
+            <!-- ================================================= -->
+
+            <div class="py-7
+                    flex flex-col
+                    lg:flex-row
+                    lg:items-center
+                    lg:justify-between
+                    gap-5">
+
+                <p class="text-sm text-gray-600">
+
+                    © 2026 ToolBox. All rights reserved.
+
+                </p>
+
+
+                <div class="flex flex-wrap
+                        items-center
+                        gap-x-6
+                        gap-y-3">
+
+                    <a href="#" class="text-sm
+                          text-gray-600
+                          hover:text-gray-300
+                          transition">
+
+                        Terms of Service
+
+                    </a>
+
+                    <a href="#" class="text-sm
+                          text-gray-600
+                          hover:text-gray-300
+                          transition">
+
+                        Privacy Policy
+
+                    </a>
+
+                    <a href="#" class="text-sm
+                          text-gray-600
+                          hover:text-gray-300
+                          transition">
+
+                        Rental Policy
+
+                    </a>
+
+                    <a href="#" class="text-sm
+                          text-gray-600
+                          hover:text-gray-300
+                          transition">
+
+                        Cancellation Policy
+
+                    </a>
+
+                </div>
+
+
+                <!-- Payment methods -->
+
+                <div class="flex items-center gap-2">
+
+                    <span class="text-xs text-gray-600 mr-2">
+                        We accept
+                    </span>
+
+                    <span class="px-3 py-2
+                             rounded-lg
+                             bg-[#1d1a22]
+                             border border-white/5
+                             text-xs text-gray-500">
+
+                        UPI
+
+                    </span>
+
+                    <span class="px-3 py-2
+                             rounded-lg
+                             bg-[#1d1a22]
+                             border border-white/5
+                             text-xs text-gray-500">
+
+                        Cards
+
+                    </span>
+
+                    <span class="px-3 py-2
+                             rounded-lg
+                             bg-[#1d1a22]
+                             border border-white/5
+                             text-xs text-gray-500">
+
+                        Net Banking
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+</body>
+
+</html>

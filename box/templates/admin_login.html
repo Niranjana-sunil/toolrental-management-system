@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ToolBox - Admin Login</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* ================= BODY ================= */
+
+        body {
+
+            min-height: 100vh;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                linear-gradient(
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                ),
+                #0f0e13;
+
+            background-size: 45px 45px;
+
+            color: #f8f5f7;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 30px 20px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        /* ================= BACKGROUND GLOW ================= */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            width: 550px;
+
+            height: 550px;
+
+            border-radius: 50%;
+
+            border: 70px solid rgba(200,117,163,0.045);
+
+            top: -250px;
+
+            right: -200px;
+
+            pointer-events: none;
+        }
+
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            width: 300px;
+
+            height: 300px;
+
+            border-radius: 50%;
+
+            border: 45px solid rgba(200,117,163,0.045);
+
+            bottom: -160px;
+
+            left: -130px;
+
+            pointer-events: none;
+        }
+
+
+        /* ================= CONTAINER ================= */
+
+        .login-container {
+
+            width: 100%;
+
+            max-width: 430px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        /* ================= LOGO ================= */
+
+        .logo {
+
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+
+        .logo a {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            text-decoration: none;
+
+            color: #ffffff;
+
+            font-size: 28px;
+
+            font-weight: 800;
+
+            letter-spacing: -1px;
+        }
+
+
+        .logo a i {
+
+            color: #c875a3;
+
+            font-size: 25px;
+        }
+
+
+        .logo a span {
+
+            color: #c875a3;
+        }
+
+
+        .logo p {
+
+            color: #77727b;
+
+            font-size: 13px;
+
+            margin-top: 7px;
+        }
+
+
+        /* ================= LOGIN BOX ================= */
+
+        .login-box {
+
+            background: rgba(27,25,32,0.94);
+
+            padding: 40px;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,0.40);
+
+            backdrop-filter: blur(12px);
+        }
+
+
+        /* ================= ADMIN ICON ================= */
+
+        .admin-icon {
+
+            width: 68px;
+
+            height: 68px;
+
+            background: rgba(166,83,128,0.12);
+
+            color: #dca2c4;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 28px;
+
+            margin: 0 auto 22px;
+
+            border: 1px solid rgba(200,117,163,0.18);
+
+            border-radius: 17px;
+
+            box-shadow:
+                0 10px 30px rgba(166,83,128,0.10);
+        }
+
+
+        /* ================= HEADING ================= */
+
+        .login-box h2 {
+
+            text-align: center;
+
+            font-size: 27px;
+
+            font-weight: 800;
+
+            letter-spacing: -0.8px;
+
+            margin-bottom: 8px;
+
+            color: #ffffff;
+        }
+
+
+        .login-description {
+
+            text-align: center;
+
+            color: #858087;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* ================= MESSAGES ================= */
+
+        .messages {
+
+            margin-bottom: 20px;
+        }
+
+
+        .error-message {
+
+            background: rgba(200,117,163,0.08);
+
+            color: #dca2c4;
+
+            border: 1px solid rgba(200,117,163,0.18);
+
+            padding: 12px 14px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            text-align: center;
+        }
+
+
+        .error-message i {
+
+            margin-right: 6px;
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-group {
+
+            margin-bottom: 19px;
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            color: #aaa5ad;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.4px;
+        }
+
+
+        .input-wrapper {
+
+            position: relative;
+        }
+
+
+        .input-wrapper i {
+
+            position: absolute;
+
+            left: 15px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #69636d;
+
+            font-size: 14px;
+
+            pointer-events: none;
+
+            transition: 0.2s;
+        }
+
+
+        .form-group input {
+
+            width: 100%;
+
+            padding: 14px 16px 14px 42px;
+
+            background: #17151c;
+
+            border: 1px solid rgba(255,255,255,0.09);
+
+            border-radius: 10px;
+
+            outline: none;
+
+            font-size: 14px;
+
+            color: #ffffff;
+
+            transition: 0.2s;
+        }
+
+
+        .form-group input::placeholder {
+
+            color: #69636d;
+        }
+
+
+        .form-group input:focus {
+
+            border-color: #c875a3;
+
+            background: #1a181f;
+
+            box-shadow:
+                0 0 0 3px rgba(200,117,163,0.10);
+        }
+
+
+        .input-wrapper:focus-within i {
+
+            color: #c875a3;
+        }
+
+
+        /* ================= LOGIN BUTTON ================= */
+
+        .login-btn {
+
+            width: 100%;
+
+            border: none;
+
+            background: #a65380;
+
+            color: #ffffff;
+
+            padding: 14px 20px;
+
+            border-radius: 30px;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+
+            transition: 0.25s;
+
+            box-shadow:
+                0 10px 25px rgba(166,83,128,0.20);
+        }
+
+
+        .login-btn i {
+
+            margin-left: 7px;
+
+            color: #ffffff;
+        }
+
+
+        .login-btn:hover {
+
+            background: #bb6d99;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 14px 30px rgba(166,83,128,0.28);
+        }
+
+
+        /* ================= BACK HOME ================= */
+
+        .back-home {
+
+            text-align: center;
+
+            margin-top: 23px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid rgba(255,255,255,0.07);
+        }
+
+
+        .back-home a {
+
+            color: #858087;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+
+        .back-home a i {
+
+            margin-right: 6px;
+        }
+
+
+        .back-home a:hover {
+
+            color: #dca2c4;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+
+            text-align: center;
+
+            color: #69636d;
+
+            font-size: 11px;
+
+            margin-top: 22px;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 500px) {
+
+            body {
+
+                padding: 20px 15px;
+            }
+
+
+            .login-box {
+
+                padding: 30px 24px;
+            }
+
+
+            .logo a {
+
+                font-size: 25px;
+            }
+
+
+            .logo a i {
+
+                font-size: 22px;
+            }
+
+
+            .login-box h2 {
+
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="login-container">
+
+
+        <!-- ================= LOGO ================= -->
+
+        <div class="logo">
+
+            <a href="{% url 'index' %}">
+
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                Tool<span>Box</span>
+
+            </a>
+
+            <p>
+                Tool Rental Management System
+            </p>
+
+        </div>
+
+
+        <!-- ================= LOGIN BOX ================= -->
+
+        <div class="login-box">
+
+
+            <!-- ADMIN ICON -->
+
+            <div class="admin-icon">
+
+                <i class="fa-solid fa-user-shield"></i>
+
+            </div>
+
+
+            <h2>
+                Admin Login
+            </h2>
+
+
+            <p class="login-description">
+
+                Sign in to manage your ToolBox platform
+
+            </p>
+
+
+            <!-- ================= MESSAGES ================= -->
+
+            {% if messages %}
+
+                <div class="messages">
+
+                    {% for message in messages %}
+
+                        <div class="error-message">
+
+                            <i class="fa-solid fa-circle-exclamation"></i>
+
+                            {{ message }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- ================= LOGIN FORM ================= -->
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- USERNAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        Admin Username
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <input
+                            type="text"
+                            name="username"
+                            placeholder="Enter admin username"
+                            required
+                        >
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label>
+                        Password
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Enter admin password"
+                            required
+                        >
+
+                        <i class="fa-solid fa-lock"></i>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOGIN BUTTON -->
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                >
+
+                    Login to Admin Panel
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+
+            </form>
+
+
+            <!-- ================= BACK HOME ================= -->
+
+            <div class="back-home">
+
+                <a href="{% url 'index' %}">
+
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                    Back to ToolBox
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <div class="footer">
+
+            <i class="fa-regular fa-copyright"></i>
+
+            2026 ToolBox. All Rights Reserved.
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

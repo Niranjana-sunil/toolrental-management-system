@@ -1,0 +1,559 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Profile | ToolBox</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px),
+                #0f0e13;
+            background-size: 45px 45px;
+            color: #f8f5f7;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 76px;
+            background: rgba(15, 14, 19, 0.92);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .logo i {
+            color: #c875a3;
+            font-size: 23px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #aaa5ad;
+            padding: 10px 17px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+            background: rgba(200,117,163,0.12);
+        }
+
+        .nav-links a.active {
+            color: #ffffff;
+            background: #a65380;
+        }
+
+        .logout-btn {
+            border: 1px solid rgba(200,117,163,0.5);
+        }
+
+        /* MAIN */
+
+        .main-container {
+            min-height: calc(100vh - 76px);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 70px 20px;
+        }
+
+        .profile-wrapper {
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .page-heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .page-heading .small-title {
+            color: #c875a3;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .page-heading h1 {
+            margin: 0;
+            font-size: 42px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .page-heading p {
+            margin-top: 10px;
+            color: #aaa5ad;
+            font-size: 15px;
+        }
+
+        /* CARD */
+
+        .edit-card {
+            background: rgba(30, 28, 35, 0.88);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.3);
+        }
+
+        .profile-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a65380, #dca2c4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            color: white;
+            box-shadow: 0 12px 35px rgba(166,83,128,0.3);
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 9px;
+            color: #e9e5e8;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .form-group label i {
+            color: #c875a3;
+            margin-right: 7px;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 50px;
+            padding: 0 16px;
+            border-radius: 13px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #17151c;
+            color: #ffffff;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #c875a3;
+            box-shadow: 0 0 0 3px rgba(200,117,163,0.10);
+        }
+
+        .form-control::placeholder {
+            color: #77727b;
+        }
+
+        textarea.form-control {
+            height: 100px;
+            padding-top: 14px;
+            resize: vertical;
+        }
+
+        /* BUTTONS */
+
+        .button-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            height: 50px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-save {
+            border: none;
+            background: #a65380;
+            color: white;
+        }
+
+        .btn-save:hover {
+            background: #bb6d99;
+            transform: translateY(-2px);
+        }
+
+        .btn-cancel {
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #ddd8dc;
+            background: transparent;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255,255,255,0.05);
+            color: white;
+        }
+
+        /* FOOTER */
+
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.07);
+            background: #0c0b0f;
+            padding: 28px 20px;
+            text-align: center;
+        }
+
+        .footer-brand {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-size: 17px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .footer-brand i {
+            color: #c875a3;
+        }
+
+        .footer-text {
+            margin: 8px 0 14px;
+            color: #858087;
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            color: #aaa5ad;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .footer-links a:hover {
+            color: #dca2c4;
+        }
+
+        .footer-bottom {
+            margin-top: 16px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            color: #66616a;
+            font-size: 12px;
+        }
+
+        /* MESSAGE */
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            padding: 13px 16px;
+            border-radius: 12px;
+            background: rgba(200,117,163,0.10);
+            border: 1px solid rgba(200,117,163,0.25);
+            color: #e9c8da;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 0 20px;
+                height: auto;
+                min-height: 70px;
+                flex-direction: column;
+                gap: 10px;
+                padding-top: 14px;
+                padding-bottom: 14px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links a {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .main-container {
+                padding: 45px 15px;
+            }
+
+            .page-heading h1 {
+                font-size: 32px;
+            }
+
+            .edit-card {
+                padding: 25px 20px;
+            }
+
+            .button-row {
+                flex-direction: column;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <a href="{% url 'user_dashboard' %}" class="logo">
+        <i class="fa-solid fa-screwdriver-wrench"></i>
+        ToolBox
+    </a>
+
+    <div class="nav-links">
+
+        <a href="{% url 'user_dashboard' %}">
+            Dashboard
+        </a>
+
+        <a href="{% url 'my_rentals' %}">
+            My Rentals
+        </a>
+
+        <a href="{% url 'user_profile' %}" class="active">
+            Profile
+        </a>
+
+        <a href="{% url 'user_logout' %}" class="logout-btn">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- MAIN -->
+
+<main class="main-container">
+
+    <div class="profile-wrapper">
+
+        <div class="page-heading">
+
+            <div class="small-title">
+                Account Settings
+            </div>
+
+            <h1>Edit Profile</h1>
+
+            <p>
+                Update your ToolBox account information
+            </p>
+
+        </div>
+
+
+        {% if messages %}
+
+            <div class="messages">
+
+                {% for message in messages %}
+
+                    <div class="message">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <div class="edit-card">
+
+            <div class="profile-icon">
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- USERNAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        <i class="fa-solid fa-user"></i>
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        name="username"
+                        class="form-control"
+                        value="{{ customer.username }}"
+                        placeholder="Enter username"
+                        maxlength="10"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+
+                    <label>
+                        <i class="fa-solid fa-phone"></i>
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="text"
+                        name="phone"
+                        class="form-control"
+                        value="{{ customer.phone }}"
+                        placeholder="Enter phone number"
+                        maxlength="10"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ADDRESS -->
+
+                <div class="form-group">
+
+                    <label>
+                        <i class="fa-solid fa-location-dot"></i>
+                        Address
+                    </label>
+
+                    <textarea
+                        name="address"
+                        class="form-control"
+                        placeholder="Enter your address"
+                        required
+                    >{{ customer.address }}</textarea>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="button-row">
+
+                    <button type="submit" class="btn btn-save">
+                        <i class="fa-solid fa-check mr-2"></i>
+                        Save Changes
+                    </button>
+
+                    <a href="{% url 'user_profile' %}" class="btn btn-cancel">
+                        <i class="fa-solid fa-xmark mr-2"></i>
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div class="footer-brand">
+        <i class="fa-solid fa-screwdriver-wrench"></i>
+        ToolBox
+    </div>
+
+    <p class="footer-text">
+        Rent the tools you need. Get the job done.
+    </p>
+
+  
+
+    <div class="footer-bottom">
+        © 2026 ToolBox. All rights reserved.
+    </div>
+
+</footer>
+
+</body>
+</html>

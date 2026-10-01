@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customers | ToolBox Admin</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================================
+           BODY
+        ===================================================== */
+
+        body {
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                linear-gradient(
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                ),
+                #0f0e13;
+
+            background-size: 45px 45px;
+
+            color: #f8f5f7;
+
+            min-height: 100vh;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+
+            width: 245px;
+            height: 100vh;
+
+            background: #111016;
+
+            border-right:
+                1px solid rgba(255,255,255,0.07);
+
+            padding: 28px 18px;
+
+            z-index: 2000;
+
+            overflow-y: auto;
+        }
+
+
+        /* =====================================================
+           LOGO
+        ===================================================== */
+
+        .sidebar-logo {
+
+            display: block;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 24px;
+
+            font-weight: 800;
+
+            padding: 0 12px;
+
+            margin-bottom: 42px;
+        }
+
+
+        .sidebar-logo i {
+
+            color: #c875a3;
+
+            margin-right: 8px;
+        }
+
+
+        /* =====================================================
+           ADMINISTRATION
+        ===================================================== */
+
+        .sidebar-title {
+
+            color: #6f6972;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            padding: 0 12px;
+
+            margin-bottom: 12px;
+        }
+
+
+        /* =====================================================
+           MENU
+        ===================================================== */
+
+        .sidebar-menu {
+
+            list-style: none;
+        }
+
+
+        .sidebar-menu li {
+
+            margin-bottom: 5px;
+        }
+
+
+        .sidebar-menu a,
+        .menu-toggle {
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 14px;
+
+            text-decoration: none;
+
+            color: #aaa5ad;
+
+            background: transparent;
+
+            border: none;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            font-size: 13px;
+
+            text-align: left;
+
+            transition: 0.25s;
+        }
+
+
+        .sidebar-menu a:hover,
+        .menu-toggle:hover {
+
+            color: #ffffff;
+
+            background:
+                rgba(200,117,163,0.09);
+        }
+
+
+        /* =====================================================
+           ACTIVE MENU
+        ===================================================== */
+
+        .sidebar-menu a.active {
+
+            background: #a65380;
+
+            color: #ffffff;
+
+            box-shadow:
+                0 8px 22px rgba(166,83,128,0.20);
+        }
+
+
+        /* =====================================================
+           ICONS
+        ===================================================== */
+
+        .sidebar-menu i,
+        .menu-toggle i {
+
+            width: 18px;
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           MANAGE TOOLS
+        ===================================================== */
+
+        .menu-toggle {
+
+            justify-content: space-between;
+        }
+
+
+        .menu-toggle-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        /* =====================================================
+           ARROW
+        ===================================================== */
+
+        .arrow {
+
+            font-size: 10px;
+
+            transition: 0.3s;
+        }
+
+
+        .menu-toggle.open .arrow {
+
+            transform: rotate(180deg);
+        }
+
+
+        /* =====================================================
+           SUBMENU
+        ===================================================== */
+
+        .submenu {
+
+            max-height: 0;
+
+            overflow: hidden;
+
+            margin-left: 14px;
+
+            padding-left: 14px;
+
+            border-left:
+                1px solid rgba(255,255,255,0.09);
+
+            transition:
+                max-height 0.3s ease;
+        }
+
+
+        .submenu.show {
+
+            max-height: 200px;
+        }
+
+
+        .submenu a {
+
+            padding: 10px 12px;
+
+            color: #858087;
+
+            font-size: 12px;
+        }
+
+
+        .submenu a:hover {
+
+            color: #dca2c4;
+
+            background:
+                rgba(200,117,163,0.08);
+        }
+
+
+        .submenu a.active {
+
+            background: #a65380;
+
+            color: #ffffff;
+
+            box-shadow:
+                0 8px 20px rgba(166,83,128,0.18);
+        }
+
+
+        /* =====================================================
+           SIDEBAR LOGOUT
+        ===================================================== */
+
+        .sidebar-logout {
+
+            margin-top: 35px;
+
+            border-top:
+                1px solid rgba(255,255,255,0.07);
+
+            padding-top: 20px;
+        }
+
+
+        .sidebar-logout a {
+
+            color: #aaa5ad;
+        }
+
+
+        .sidebar-logout a:hover {
+
+            color: #dca2c4;
+
+            background:
+                rgba(200,117,163,0.09);
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+
+            margin-left: 245px;
+
+            min-height: 100vh;
+        }
+
+
+        /* =====================================================
+           TOP NAVBAR
+        ===================================================== */
+
+        .navbar-container {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            background:
+                rgba(15,14,19,0.94);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.07);
+
+            backdrop-filter: blur(12px);
+        }
+
+
+        .navbar {
+
+            width: 90%;
+
+            max-width: 1200px;
+
+            min-height: 72px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+        }
+
+
+        .nav-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        /* =====================================================
+           ADMINISTRATOR
+        ===================================================== */
+
+        .admin-name {
+
+            color: #aaa5ad;
+
+            font-size: 13px;
+        }
+
+
+        .admin-name i {
+
+            color: #c875a3;
+
+            margin-right: 6px;
+        }
+
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        .logout {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            border:
+                1px solid rgba(200,117,163,0.45);
+
+            border-radius: 30px;
+
+            color: #dca2c4;
+
+            padding: 9px 18px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            transition: 0.25s;
+        }
+
+
+        .logout:hover {
+
+            background: #a65380;
+
+            color: #ffffff;
+
+            border-color: #a65380;
+
+            box-shadow:
+                0 8px 22px rgba(166,83,128,0.20);
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content {
+
+            width: 90%;
+
+            max-width: 1100px;
+
+            margin: 45px auto 70px;
+        }
+
+
+        /* =====================================================
+           PAGE HEADER
+        ===================================================== */
+
+        .page-heading {
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 90% 15%,
+                    rgba(166,83,128,0.22),
+                    transparent 30%
+                ),
+                #17151c;
+
+            padding: 38px;
+
+            margin-bottom: 28px;
+
+            border-radius: 22px;
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+        }
+
+
+        .page-heading::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+
+            height: 250px;
+
+            border:
+                45px solid rgba(200,117,163,0.04);
+
+            border-radius: 50%;
+
+            right: -100px;
+
+            top: -100px;
+        }
+
+
+        .page-heading-content {
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .page-label {
+
+            color: #dca2c4;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 13px;
+
+            border-left:
+                3px solid #c875a3;
+
+            padding-left: 10px;
+        }
+
+
+        .page-heading h2 {
+
+            color: #ffffff;
+
+            font-size: 31px;
+
+            font-weight: 800;
+
+            margin-bottom: 8px;
+        }
+
+
+        .page-heading p {
+
+            color: #aaa5ad;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           CUSTOMER LIST
+        ===================================================== */
+
+        .customer-list {
+
+            display: grid;
+
+            gap: 15px;
+        }
+
+
+        /* =====================================================
+           CUSTOMER CARD
+        ===================================================== */
+
+        .customer-card {
+
+            background:
+                rgba(27,25,32,0.92);
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            border-radius: 18px;
+
+            padding: 21px 23px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            transition: 0.25s;
+        }
+
+
+        .customer-card:hover {
+
+            border-color:
+                rgba(200,117,163,0.30);
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 15px 35px rgba(0,0,0,0.22);
+        }
+
+
+        /* =====================================================
+           CUSTOMER INFO
+        ===================================================== */
+
+        .customer-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 17px;
+
+            min-width: 0;
+        }
+
+
+        /* =====================================================
+           AVATAR
+        ===================================================== */
+
+        .customer-avatar {
+
+            width: 56px;
+
+            height: 56px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(166,83,128,0.12);
+
+            border:
+                1px solid rgba(200,117,163,0.18);
+
+            color: #dca2c4;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 21px;
+
+            flex-shrink: 0;
+        }
+
+
+        /* =====================================================
+           DETAILS
+        ===================================================== */
+
+        .customer-details {
+
+            min-width: 0;
+        }
+
+
+        .customer-details h3 {
+
+            color: #ffffff;
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+            margin-bottom: 8px;
+        }
+
+
+        .customer-details p {
+
+            color: #858087;
+
+            font-size: 13px;
+
+            margin-top: 6px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            word-break: break-word;
+        }
+
+
+        .customer-details p i {
+
+            color: #c875a3;
+
+            width: 15px;
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           CUSTOMER NUMBER
+        ===================================================== */
+
+        .customer-number {
+
+            color: #69636d;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            background:
+                rgba(255,255,255,0.04);
+
+            border:
+                1px solid rgba(255,255,255,0.06);
+
+            padding: 7px 10px;
+
+            border-radius: 20px;
+        }
+
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .empty {
+
+            background:
+                rgba(27,25,32,0.92);
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            border-radius: 22px;
+
+            padding: 70px 25px;
+
+            text-align: center;
+        }
+
+
+        .empty-icon {
+
+            width: 70px;
+
+            height: 70px;
+
+            margin:
+                0 auto 18px;
+
+            background:
+                rgba(166,83,128,0.10);
+
+            border:
+                1px solid rgba(200,117,163,0.18);
+
+            border-radius: 17px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #c875a3;
+
+            font-size: 28px;
+        }
+
+
+        .empty h2 {
+
+            color: #ffffff;
+
+            font-size: 22px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .empty p {
+
+            color: #858087;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           MOBILE MENU
+        ===================================================== */
+
+        .mobile-menu {
+
+            display: none;
+
+            position: fixed;
+
+            left: 15px;
+
+            top: 15px;
+
+            width: 42px;
+
+            height: 42px;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border:
+                1px solid rgba(255,255,255,0.10);
+
+            border-radius: 10px;
+
+            background: #17151c;
+
+            color: #dca2c4;
+
+            z-index: 3000;
+
+            cursor: pointer;
+
+            font-size: 17px;
+
+            transition: 0.25s;
+        }
+
+
+        .mobile-menu:hover {
+
+            background: #a65380;
+
+            color: #ffffff;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            margin-left: 245px;
+
+            background: #0c0b0f;
+
+            border-top:
+                1px solid rgba(255,255,255,0.07);
+
+            text-align: center;
+
+            padding: 27px 20px;
+
+            color: #858087;
+
+            font-size: 12px;
+        }
+
+
+        footer strong {
+
+            color: #ffffff;
+
+            font-size: 16px;
+        }
+
+
+        footer span {
+
+            color: #c875a3;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 850px) {
+
+            .sidebar {
+
+                transform:
+                    translateX(-100%);
+
+                transition:
+                    transform 0.3s ease;
+            }
+
+
+            .sidebar.open {
+
+                transform:
+                    translateX(0);
+            }
+
+
+            .main {
+
+                margin-left: 0;
+            }
+
+
+            .mobile-menu {
+
+                display: flex;
+            }
+
+
+            .navbar {
+
+                width: 90%;
+
+                padding-left: 55px;
+            }
+
+
+            .content {
+
+                width: 92%;
+
+                margin-top: 35px;
+            }
+
+
+            footer {
+
+                margin-left: 0;
+            }
+        }
+
+
+        @media (max-width: 650px) {
+
+            .admin-name {
+
+                display: none;
+            }
+
+
+            .page-heading {
+
+                padding: 28px 23px;
+            }
+
+
+            .page-heading h2 {
+
+                font-size: 26px;
+            }
+
+
+            .customer-card {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                padding: 20px;
+            }
+
+
+            .customer-info {
+
+                width: 100%;
+            }
+
+
+            .customer-number {
+
+                align-self: flex-start;
+            }
+        }
+
+
+        @media (max-width: 450px) {
+
+            .customer-info {
+
+                align-items: flex-start;
+            }
+
+
+            .customer-avatar {
+
+                width: 50px;
+
+                height: 50px;
+
+                font-size: 19px;
+            }
+
+
+            .customer-details h3 {
+
+                font-size: 16px;
+            }
+
+
+            .customer-details p {
+
+                font-size: 12px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     MOBILE MENU
+===================================================== -->
+
+<button
+    class="mobile-menu"
+    onclick="toggleSidebar()"
+    aria-label="Open menu">
+
+    <i class="fa-solid fa-bars"></i>
+
+</button>
+
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside
+    class="sidebar"
+    id="sidebar">
+
+
+    <!-- LOGO -->
+
+    <a
+        href="{% url 'admin_dashboard' %}"
+        class="sidebar-logo">
+
+        <i class="fa-solid fa-screwdriver-wrench"></i>
+
+        ToolBox
+
+    </a>
+
+
+
+    <!-- TITLE -->
+
+    <div class="sidebar-title">
+
+        Administration
+
+    </div>
+
+
+
+    <!-- MENU -->
+
+    <ul class="sidebar-menu">
+
+
+        <!-- DASHBOARD -->
+
+        <li>
+
+            <a href="{% url 'admin_dashboard' %}">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+        </li>
+
+
+
+        <!-- MANAGE TOOLS -->
+
+        <li>
+
+            <button
+                class="menu-toggle"
+                onclick="toggleTools()">
+
+                <span class="menu-toggle-left">
+
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                    <span>Manage Tools</span>
+
+                </span>
+
+
+                <i
+                    class="fa-solid fa-chevron-down arrow"
+                    id="toolArrow">
+                </i>
+
+            </button>
+
+
+
+            <!-- SUBMENU -->
+
+            <div
+                class="submenu"
+                id="toolSubmenu">
+
+
+                <!-- ADD TOOL -->
+
+                <a href="{% url 'add_tool' %}">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    <span>Add Tool</span>
+
+                </a>
+
+
+
+                <!-- VIEW TOOLS -->
+
+                <a href="{% url 'view_tool' %}">
+
+                    <i class="fa-solid fa-toolbox"></i>
+
+                    <span>View Tools</span>
+
+                </a>
+
+
+            </div>
+
+        </li>
+
+
+
+        <!-- CUSTOMERS ACTIVE -->
+
+        <li>
+
+            <a
+                href="{% url 'view_customers' %}"
+                class="active">
+
+                <i class="fa-solid fa-users"></i>
+
+                <span>Customers</span>
+
+            </a>
+
+        </li>
+
+
+
+        <!-- RENTAL REQUESTS -->
+
+        <li>
+
+            <a href="{% url 'manage_rentals' %}">
+
+                <i class="fa-solid fa-clipboard-list"></i>
+
+                <span>Rental Requests</span>
+
+            </a>
+
+        </li>
+
+
+    </ul>
+
+
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="main">
+
+
+    <!-- =================================================
+         TOP NAVBAR
+    ================================================= -->
+
+    <div class="navbar-container">
+
+        <nav class="navbar">
+
+            <div class="nav-right">
+
+
+                <!-- ADMINISTRATOR -->
+
+                <span class="admin-name">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    Administrator
+
+                </span>
+
+
+
+                <!-- LOGOUT -->
+
+                <a
+                    href="{% url 'admin_logout' %}"
+                    class="logout">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    Logout
+
+                </a>
+
+
+            </div>
+
+        </nav>
+
+    </div>
+
+
+
+    <!-- =================================================
+         CONTENT
+    ================================================= -->
+
+    <main class="content">
+
+
+        <!-- PAGE HEADING -->
+
+        <div class="page-heading">
+
+
+            <div class="page-heading-content">
+
+
+                <div class="page-label">
+
+                    Customer Management
+
+                </div>
+
+
+                <h2>
+
+                    Registered Customers
+
+                </h2>
+
+
+                <p>
+
+                    View the customers registered on the ToolBox rental platform.
+
+                </p>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             CUSTOMER LIST
+        ================================================= -->
+
+        <div class="customer-list">
+
+
+            {% for customer in customers %}
+
+
+                <div class="customer-card">
+
+
+                    <!-- CUSTOMER INFO -->
+
+                    <div class="customer-info">
+
+
+                        <!-- AVATAR -->
+
+                        <div class="customer-avatar">
+
+                            <i class="fa-solid fa-user"></i>
+
+                        </div>
+
+
+
+                        <!-- DETAILS -->
+
+                        <div class="customer-details">
+
+
+                            <h3>
+
+                                {{ customer.username }}
+
+                            </h3>
+
+
+                            <!-- ADDRESS -->
+
+                            <p>
+
+                                <i class="fa-solid fa-location-dot"></i>
+
+                                <span>
+
+                                    {{ customer.address }}
+
+                                </span>
+
+                            </p>
+
+
+                            <!-- PHONE -->
+
+                            <p>
+
+                                <i class="fa-solid fa-phone"></i>
+
+                                <span>
+
+                                    {{ customer.phone }}
+
+                                </span>
+
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- CUSTOMER LABEL -->
+
+                    <div class="customer-number">
+
+                        Customer
+
+                    </div>
+
+
+                </div>
+
+
+            {% empty %}
+
+
+                <!-- =================================================
+                     EMPTY STATE
+                ================================================= -->
+
+                <div class="empty">
+
+
+                    <div class="empty-icon">
+
+                        <i class="fa-solid fa-users"></i>
+
+                    </div>
+
+
+                    <h2>
+
+                        No Customers
+
+                    </h2>
+
+
+                    <p>
+
+                        There are currently no registered customers.
+
+                    </p>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <strong>
+
+        Tool<span>Box</span>
+
+    </strong>
+
+    &nbsp; • &nbsp;
+
+    © 2026 ToolBox. Admin Panel.
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+    /* =================================================
+       SIDEBAR
+    ================================================= */
+
+    function toggleSidebar() {
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        sidebar.classList.toggle("open");
+
+    }
+
+
+
+    /* =================================================
+       MANAGE TOOLS
+    ================================================= */
+
+    function toggleTools() {
+
+        const submenu =
+            document.getElementById("toolSubmenu");
+
+        const button =
+            document.querySelector(".menu-toggle");
+
+        submenu.classList.toggle("show");
+
+        button.classList.toggle("open");
+
+    }
+
+
+</script>
+
+
+</body>
+
+</html>

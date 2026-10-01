@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rent Tool | ToolBox</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px),
+                #0f0e13;
+
+            background-size: 45px 45px;
+
+            color: #f8f5f7;
+            min-height: 100vh;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 76px;
+
+            background: rgba(15,14,19,0.94);
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+
+            padding: 0 7%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            backdrop-filter: blur(12px);
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+
+            font-size: 22px;
+            font-weight: 800;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: #c875a3;
+            font-size: 23px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            color: #aaa5ad;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            padding: 10px 17px;
+
+            border-radius: 30px;
+
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background: rgba(200,117,163,0.12);
+        }
+
+        .logout-btn {
+            border: 1px solid rgba(200,117,163,0.45);
+        }
+
+        .logout-btn:hover {
+            background: #a65380 !important;
+            color: white !important;
+        }
+
+        .nav-links i {
+            margin-right: 6px;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 90%;
+            max-width: 1050px;
+
+            margin: 55px auto 70px;
+        }
+
+
+        /* ================= PAGE HEADER ================= */
+
+        .page-header {
+            background:
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(166,83,128,0.22),
+                    transparent 30%
+                ),
+                #17151c;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 24px;
+
+            padding: 42px;
+
+            margin-bottom: 25px;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::after {
+            content: "";
+
+            position: absolute;
+
+            width: 260px;
+            height: 260px;
+
+            border: 45px solid rgba(200,117,163,0.06);
+
+            border-radius: 50%;
+
+            right: -100px;
+            top: -120px;
+        }
+
+        .page-header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-label {
+            color: #dca2c4;
+
+            border-left: 3px solid #c875a3;
+
+            padding-left: 10px;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 13px;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 800;
+
+            color: #ffffff;
+
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #aaa5ad;
+            font-size: 14px;
+        }
+
+
+        /* ================= MESSAGES ================= */
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            padding: 14px 17px;
+
+            background: rgba(239,68,68,0.10);
+
+            border: 1px solid rgba(239,68,68,0.25);
+
+            color: #fca5a5;
+
+            border-radius: 12px;
+
+            font-size: 13px;
+
+            margin-bottom: 8px;
+        }
+
+        .message i {
+            margin-right: 7px;
+        }
+
+
+        /* ================= MAIN CARD ================= */
+
+        .card {
+            background: rgba(27,25,32,0.90);
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 24px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,0.28);
+        }
+
+
+        /* ================= TOOL INFO ================= */
+
+        .tool-info {
+            display: grid;
+
+            grid-template-columns: 330px 1fr;
+
+            gap: 32px;
+
+            padding-bottom: 32px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .tool-image {
+            width: 100%;
+            height: 240px;
+
+            object-fit: cover;
+
+            display: block;
+
+            background: #17151c;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 18px;
+        }
+
+        .no-image {
+            width: 100%;
+            height: 240px;
+
+            background: #17151c;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 18px;
+
+            color: #77727b;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            flex-direction: column;
+
+            gap: 10px;
+
+            font-size: 13px;
+        }
+
+        .no-image i {
+            font-size: 32px;
+            color: #615b64;
+        }
+
+
+        /* ================= TOOL DETAILS ================= */
+
+        .tool-details {
+            padding-top: 5px;
+        }
+
+        .tool-details h1 {
+            font-size: 30px;
+
+            color: #ffffff;
+
+            margin-bottom: 14px;
+
+            font-weight: 800;
+        }
+
+        .category {
+            display: inline-block;
+
+            background: rgba(166,83,128,0.12);
+
+            color: #dca2c4;
+
+            padding: 7px 12px;
+
+            border: 1px solid rgba(200,117,163,0.18);
+
+            border-radius: 30px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            margin-bottom: 20px;
+        }
+
+        .category i {
+            margin-right: 5px;
+        }
+
+        .price {
+            font-size: 23px;
+
+            font-weight: 800;
+
+            color: #ffffff;
+
+            margin-bottom: 18px;
+        }
+
+        .price i {
+            color: #c875a3;
+
+            margin-right: 7px;
+
+            font-size: 18px;
+        }
+
+        .price span {
+            color: #77727b !important;
+            font-size: 13px !important;
+            font-weight: normal !important;
+        }
+
+        .description {
+            color: #aaa5ad;
+
+            font-size: 14px;
+
+            line-height: 1.8;
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-section {
+            padding-top: 32px;
+        }
+
+        .form-title {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 21px;
+
+            color: #ffffff;
+
+            margin-bottom: 25px;
+        }
+
+        .form-title i {
+            color: #c875a3;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 9px;
+
+            color: #e9e5e8;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.6px;
+        }
+
+        .form-group label i {
+            color: #c875a3;
+            margin-right: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+
+            height: 50px;
+
+            padding: 0 15px;
+
+            border-radius: 12px;
+
+            border: 1px solid rgba(255,255,255,0.10);
+
+            background: #17151c;
+
+            color: white;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #c875a3;
+
+            box-shadow:
+                0 0 0 3px rgba(200,117,163,0.10);
+        }
+
+        .form-group input::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            opacity: 0.7;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .buttons {
+            display: flex;
+
+            gap: 12px;
+
+            margin-top: 30px;
+
+            padding-top: 25px;
+
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .btn {
+            padding: 13px 23px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+            text-align: center;
+
+            cursor: pointer;
+
+            border-radius: 30px;
+
+            transition: 0.3s;
+        }
+
+        .submit-btn {
+            border: none;
+
+            background: #a65380;
+
+            color: white;
+        }
+
+        .submit-btn i {
+            margin-right: 7px;
+        }
+
+        .submit-btn:hover {
+            background: #bb6d99;
+
+            transform: translateY(-2px);
+        }
+
+        .cancel-btn {
+            background: transparent;
+
+            color: #ddd8dc;
+
+            border: 1px solid rgba(255,255,255,0.14);
+        }
+
+        .cancel-btn i {
+            margin-right: 7px;
+        }
+
+        .cancel-btn:hover {
+            border-color: #c875a3;
+
+            color: #dca2c4;
+
+            background: rgba(200,117,163,0.07);
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #0c0b0f;
+
+            border-top: 1px solid rgba(255,255,255,0.07);
+
+            color: #858087;
+
+            text-align: center;
+
+            padding: 28px 20px;
+
+            font-size: 12px;
+        }
+
+        .footer-brand {
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            gap: 8px;
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+            color: #ffffff;
+        }
+
+        .footer-brand i {
+            color: #c875a3;
+        }
+
+        .footer-text {
+            margin: 8px 0 14px;
+
+            color: #858087;
+
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+        }
+
+        .footer-links a {
+            color: #aaa5ad;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+        .footer-links a:hover {
+            color: #dca2c4;
+        }
+
+        .footer-bottom {
+            margin-top: 16px;
+
+            padding-top: 15px;
+
+            border-top: 1px solid rgba(255,255,255,0.06);
+
+            color: #66616a;
+
+            font-size: 12px;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 750px) {
+
+            .navbar {
+                padding: 12px 20px;
+
+                height: auto;
+
+                flex-direction: column;
+
+                gap: 12px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+
+                justify-content: center;
+            }
+
+            .nav-links a {
+                padding: 8px 11px;
+
+                font-size: 12px;
+            }
+
+            .container {
+                width: 92%;
+
+                margin-top: 30px;
+            }
+
+            .tool-info {
+                grid-template-columns: 1fr;
+            }
+
+            .tool-image,
+            .no-image {
+                height: 250px;
+            }
+
+            .page-header {
+                padding: 30px 25px;
+            }
+
+            .page-header h1 {
+                font-size: 29px;
+            }
+        }
+
+
+        @media (max-width: 500px) {
+
+            .card {
+                padding: 22px;
+            }
+
+            .tool-details h1 {
+                font-size: 25px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <a href="{% url 'user_dashboard' %}" class="logo">
+
+        <i class="fa-solid fa-screwdriver-wrench"></i>
+
+        ToolBox
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="{% url 'user_dashboard' %}">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            Dashboard
+
+        </a>
+
+
+        <a href="{% url 'my_rentals' %}">
+
+            <i class="fa-solid fa-clipboard-list"></i>
+
+            My Rentals
+
+        </a>
+
+
+        <a href="{% url 'user_profile' %}">
+
+            <i class="fa-solid fa-user"></i>
+
+            Profile
+
+        </a>
+
+
+        <a href="{% url 'user_logout' %}" class="logout-btn">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+
+    <!-- PAGE HEADER -->
+
+    <section class="page-header">
+
+        <div class="page-header-content">
+
+            <div class="page-label">
+                RENTAL REQUEST
+            </div>
+
+            <h1>
+                Rent Tool
+            </h1>
+
+            <p>
+                Select the dates you need this tool.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- MESSAGES -->
+
+    {% if messages %}
+
+        <div class="messages">
+
+            {% for message in messages %}
+
+                <div class="message">
+
+                    <i class="fa-solid fa-circle-exclamation"></i>
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+
+    <!-- MAIN CARD -->
+
+    <div class="card">
+
+
+        <!-- TOOL DETAILS -->
+
+        <div class="tool-info">
+
+
+            {% if tool.image %}
+
+                <img
+                    src="{{ tool.image.url }}"
+                    alt="{{ tool.name }}"
+                    class="tool-image"
+                >
+
+            {% else %}
+
+                <div class="no-image">
+
+                    <i class="fa-regular fa-image"></i>
+
+                    <span>
+                        No Image Available
+                    </span>
+
+                </div>
+
+            {% endif %}
+
+
+
+            <div class="tool-details">
+
+                <h1>
+                    {{ tool.name }}
+                </h1>
+
+
+                <div class="category">
+
+                    <i class="fa-solid fa-folder"></i>
+
+                    {{ tool.category }}
+
+                </div>
+
+
+                <div class="price">
+
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                    ₹{{ tool.price_per_day }}
+
+                    <span>
+                        / day
+                    </span>
+
+                </div>
+
+
+                <div class="description">
+
+                    {{ tool.description }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- RENTAL FORM -->
+
+        <div class="form-section">
+
+
+            <h2 class="form-title">
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+                Select Rental Dates
+
+            </h2>
+
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- START DATE -->
+
+                <div class="form-group">
+
+                    <label for="start_date">
+
+                        <i class="fa-solid fa-calendar-plus"></i>
+
+                        Start Date
+
+                    </label>
+
+
+                    <input
+                        type="date"
+                        id="start_date"
+                        name="start_date"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- END DATE -->
+
+                <div class="form-group">
+
+                    <label for="end_date">
+
+                        <i class="fa-solid fa-calendar-check"></i>
+
+                        End Date
+
+                    </label>
+
+
+                    <input
+                        type="date"
+                        id="end_date"
+                        name="end_date"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- BUTTONS -->
+
+                <div class="buttons">
+
+
+                    <button
+                        type="submit"
+                        class="btn submit-btn"
+                    >
+
+                        <i class="fa-solid fa-paper-plane"></i>
+
+                        Submit Rental Request
+
+                    </button>
+
+
+                    <a
+                        href="{% url 'index' %}"
+                        class="btn cancel-btn"
+                    >
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Cancel
+
+                    </a>
+
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-brand">
+
+        <i class="fa-solid fa-screwdriver-wrench"></i>
+
+        ToolBox
+
+    </div>
+
+
+    <p class="footer-text">
+
+        Rent the tools you need. Get the job done.
+
+    </p>
+
+
+   
+
+
+    <div class="footer-bottom">
+
+        © 2026 ToolBox. All rights reserved.
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>

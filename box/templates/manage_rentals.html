@@ -1,0 +1,1811 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ToolBox | Manage Rentals</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px),
+                #0f0e13;
+
+            background-size: 45px 45px;
+
+            color: #f8f5f7;
+            min-height: 100vh;
+        }
+
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            width: 245px;
+            height: 100vh;
+
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            background: #111016;
+
+            border-right: 1px solid rgba(255,255,255,0.07);
+
+            padding: 28px 18px;
+
+            z-index: 2000;
+
+            overflow-y: auto;
+        }
+
+
+        .sidebar-logo {
+            display: block;
+
+            text-decoration: none;
+
+            color: #ffffff;
+
+            font-size: 24px;
+
+            font-weight: 800;
+
+            padding: 0 12px;
+
+            margin-bottom: 42px;
+        }
+
+
+        .sidebar-logo i {
+            color: #c875a3;
+            margin-right: 8px;
+        }
+
+
+        .sidebar-title {
+            color: #6f6972;
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+            padding: 0 12px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+
+
+        .sidebar-menu a,
+        .menu-toggle {
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color: #aaa5ad;
+
+            text-decoration: none;
+
+            padding: 12px 14px;
+
+            border-radius: 10px;
+
+            background: transparent;
+
+            border: none;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+
+            text-align: left;
+        }
+
+
+        .sidebar-menu a:hover,
+        .menu-toggle:hover {
+
+            background: rgba(200,117,163,0.09);
+
+            color: #ffffff;
+        }
+
+
+        .sidebar-menu a i,
+        .menu-toggle i {
+
+            width: 18px;
+
+            text-align: center;
+        }
+
+
+        .sidebar-menu a.active {
+
+            background: #a65380;
+
+            color: #ffffff;
+
+            box-shadow:
+                0 8px 22px rgba(166,83,128,0.20);
+        }
+
+
+        /* ================= MANAGE TOOLS ================= */
+
+        .menu-toggle {
+            justify-content: space-between;
+        }
+
+
+        .menu-toggle-left {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .menu-toggle-left i {
+            width: 18px;
+        }
+
+
+        .arrow {
+            transition: transform 0.25s;
+        }
+
+
+        .menu-toggle.open .arrow {
+            transform: rotate(180deg);
+        }
+
+
+        /* ================= SUBMENU ================= */
+
+        .submenu {
+
+            max-height: 0;
+
+            overflow: hidden;
+
+            margin-left: 14px;
+
+            padding-left: 14px;
+
+            border-left: 1px solid rgba(255,255,255,0.09);
+
+            transition: max-height 0.3s ease;
+        }
+
+
+        .submenu.show {
+            max-height: 200px;
+        }
+
+
+        .submenu a {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: #858087;
+
+            text-decoration: none;
+
+            padding: 10px 12px;
+
+            border-radius: 9px;
+
+            font-size: 12px;
+
+            transition: 0.25s;
+        }
+
+
+        .submenu a:hover {
+
+            color: #dca2c4;
+
+            background: rgba(200,117,163,0.08);
+        }
+
+
+        .submenu a.active {
+
+            background: #a65380;
+
+            color: #ffffff;
+
+            box-shadow:
+                0 6px 18px rgba(166,83,128,0.18);
+        }
+
+
+        .submenu a i {
+            width: 16px;
+            text-align: center;
+        }
+
+
+        /* ================= SIDEBAR LOGOUT ================= */
+
+        .sidebar-logout {
+
+            margin-top: 35px;
+
+            border-top: 1px solid rgba(255,255,255,0.07);
+
+            padding-top: 20px;
+        }
+
+
+        .sidebar-logout a {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color: #aaa5ad;
+
+            text-decoration: none;
+
+            padding: 12px 14px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.25s;
+        }
+
+
+        .sidebar-logout a:hover {
+
+            background: rgba(200,117,163,0.09);
+
+            color: #dca2c4;
+        }
+
+
+        .sidebar-logout i {
+            width: 18px;
+            text-align: center;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .main-wrapper {
+
+            margin-left: 245px;
+
+            min-height: 100vh;
+        }
+
+
+        /* ================= TOP NAVBAR ================= */
+
+        .navbar-container {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            background: rgba(15,14,19,0.94);
+
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+
+            backdrop-filter: blur(12px);
+        }
+
+
+        .navbar {
+
+            width: 90%;
+
+            max-width: 1200px;
+
+            min-height: 72px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+        }
+
+
+        .nav-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .admin-name {
+
+            color: #aaa5ad;
+
+            font-size: 13px;
+        }
+
+
+        .admin-name i {
+
+            color: #c875a3;
+
+            margin-right: 6px;
+        }
+
+
+        .logout {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #dca2c4;
+
+            text-decoration: none;
+
+            border: 1px solid rgba(200,117,163,0.45);
+
+            padding: 9px 18px;
+
+            border-radius: 30px;
+
+            font-size: 13px;
+
+            transition: 0.25s;
+        }
+
+
+        .logout:hover {
+
+            background: #a65380;
+
+            color: #ffffff;
+
+            border-color: #a65380;
+        }
+
+
+        /* ================= CONTENT ================= */
+
+        .content {
+
+            width: 90%;
+
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding: 42px 0 70px;
+        }
+
+
+        /* ================= PAGE HEADER ================= */
+
+        .page-header {
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+
+                radial-gradient(
+                    circle at 90% 15%,
+                    rgba(166,83,128,0.22),
+                    transparent 30%
+                ),
+
+                #17151c;
+
+            padding: 35px;
+
+            margin-bottom: 25px;
+
+            border-radius: 22px;
+
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+
+        .page-label {
+
+            color: #dca2c4;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            border-left: 3px solid #c875a3;
+
+            padding-left: 10px;
+
+            margin-bottom: 13px;
+        }
+
+
+        .page-header h1 {
+
+            color: #ffffff;
+
+            font-size: 31px;
+
+            font-weight: 800;
+
+            margin-bottom: 8px;
+        }
+
+
+        .page-header p {
+
+            color: #aaa5ad;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= MESSAGES ================= */
+
+        .message {
+
+            padding: 13px 16px;
+
+            margin-bottom: 18px;
+
+            border-radius: 12px;
+
+            background: rgba(200,117,163,0.08);
+
+            border: 1px solid rgba(200,117,163,0.18);
+
+            color: #dca2c4;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        .message i {
+            margin-right: 7px;
+        }
+
+
+        /* ================= TABLE CARD ================= */
+
+        .table-card {
+
+            background: rgba(27,25,32,0.92);
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.20);
+        }
+
+
+        .table-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 22px 24px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+
+        .header-icon {
+
+            width: 42px;
+
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: rgba(166,83,128,0.12);
+
+            color: #dca2c4;
+
+            border: 1px solid rgba(200,117,163,0.16);
+
+            border-radius: 12px;
+        }
+
+
+        .table-header h2 {
+
+            color: #ffffff;
+
+            font-size: 18px;
+
+            font-weight: 800;
+        }
+
+
+        .table-header p {
+
+            color: #77727b;
+
+            font-size: 12px;
+
+            margin-top: 3px;
+        }
+
+
+        /* ================= TABLE ================= */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            min-width: 1050px;
+
+            border-collapse: collapse;
+        }
+
+
+        th {
+
+            background: #17151c;
+
+            text-align: left;
+
+            padding: 15px 18px;
+
+            font-size: 10px;
+
+            color: #77727b;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+
+        td {
+
+            padding: 17px 18px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+
+            vertical-align: middle;
+
+            font-size: 13px;
+
+            color: #aaa5ad;
+        }
+
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        tbody tr {
+            transition: 0.20s;
+        }
+
+
+        tbody tr:hover {
+            background: rgba(200,117,163,0.035);
+        }
+
+
+        /* ================= CUSTOMER ================= */
+
+        .customer {
+
+            color: #ffffff;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+
+        .customer i {
+
+            color: #c875a3;
+
+            margin-right: 6px;
+        }
+
+
+        td small {
+
+            color: #69636d;
+
+            font-size: 11px;
+        }
+
+
+        td small i {
+            margin-right: 5px;
+        }
+
+
+        /* ================= TOOL ================= */
+
+        .tool-name {
+
+            color: #ffffff;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+
+        .tool-name i {
+
+            color: #c875a3;
+
+            margin-right: 6px;
+        }
+
+
+        /* ================= DATES ================= */
+
+        .dates {
+
+            white-space: nowrap;
+
+            color: #aaa5ad;
+
+            line-height: 1.7;
+        }
+
+
+        .dates i {
+
+            color: #c875a3;
+
+            margin-right: 5px;
+        }
+
+
+        .dates span {
+
+            color: #69636d;
+
+            font-size: 11px;
+        }
+
+
+        /* ================= DAYS ================= */
+
+        .days {
+
+            color: #ffffff;
+
+            font-weight: 800;
+
+            text-align: center;
+        }
+
+
+        /* ================= PRICE ================= */
+
+        .price {
+
+            color: #dca2c4;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        .price i {
+            margin-right: 4px;
+        }
+
+
+        /* ================= STATUS ================= */
+
+        .status {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 7px 11px;
+
+            border-radius: 30px;
+
+            background: rgba(255,255,255,0.04);
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            color: #aaa5ad;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        .status i {
+
+            font-size: 7px;
+
+            color: #c875a3;
+        }
+
+
+        /* ================= STATUS FORM ================= */
+
+        .status-form {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+        }
+
+
+        .status-select {
+
+            min-width: 115px;
+
+            padding: 9px 11px;
+
+            border: 1px solid rgba(255,255,255,0.10);
+
+            border-radius: 10px;
+
+            background: #17151c;
+
+            color: #ffffff;
+
+            font-size: 12px;
+
+            outline: none;
+
+            cursor: pointer;
+        }
+
+
+        .status-select:focus {
+
+            border-color: #c875a3;
+
+            box-shadow:
+                0 0 0 3px rgba(200,117,163,0.10);
+        }
+
+
+        .status-select option {
+
+            background: #17151c;
+
+            color: #ffffff;
+        }
+
+
+        /* ================= UPDATE BUTTON ================= */
+
+        .update-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 6px;
+
+            padding: 9px 13px;
+
+            border: none;
+
+            border-radius: 30px;
+
+            background: #a65380;
+
+            color: #ffffff;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+
+            white-space: nowrap;
+        }
+
+
+        .update-btn:hover {
+
+            background: #bb6d99;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+
+            background: rgba(27,25,32,0.92);
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 22px;
+
+            padding: 70px 25px;
+
+            text-align: center;
+        }
+
+
+        .empty-icon {
+
+            width: 70px;
+
+            height: 70px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: rgba(166,83,128,0.10);
+
+            border: 1px solid rgba(200,117,163,0.18);
+
+            border-radius: 17px;
+
+            color: #c875a3;
+
+            font-size: 28px;
+        }
+
+
+        .empty h2 {
+
+            color: #ffffff;
+
+            font-size: 22px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .empty p {
+
+            color: #858087;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+
+            margin-left: 245px;
+
+            background: #0c0b0f;
+
+            border-top: 1px solid rgba(255,255,255,0.07);
+
+            text-align: center;
+
+            padding: 27px 20px;
+
+            color: #858087;
+
+            font-size: 12px;
+        }
+
+
+        footer strong {
+
+            color: #ffffff;
+
+            font-size: 16px;
+        }
+
+
+        footer span {
+            color: #c875a3;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        .mobile-menu {
+
+            display: none;
+
+            position: fixed;
+
+            left: 15px;
+
+            top: 15px;
+
+            width: 42px;
+
+            height: 42px;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border: 1px solid rgba(255,255,255,0.10);
+
+            border-radius: 10px;
+
+            background: #17151c;
+
+            color: #dca2c4;
+
+            z-index: 3000;
+
+            cursor: pointer;
+        }
+
+
+        .mobile-menu:hover {
+
+            background: #a65380;
+
+            color: #ffffff;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+
+                transform: translateX(-100%);
+
+                transition: 0.3s ease;
+            }
+
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+
+            footer {
+                margin-left: 0;
+            }
+
+
+            .mobile-menu {
+                display: flex;
+            }
+
+
+            .navbar {
+                padding-left: 60px;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .content {
+
+                width: 92%;
+
+                padding: 30px 0 55px;
+            }
+
+
+            .page-header {
+
+                padding: 28px 22px;
+            }
+
+
+            .page-header h1 {
+                font-size: 26px;
+            }
+
+
+            .admin-name {
+                display: none;
+            }
+
+
+            .table-header {
+                padding: 20px;
+            }
+
+
+            .navbar {
+                justify-content: flex-end;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= MOBILE MENU ================= -->
+
+    <button class="mobile-menu"
+            onclick="toggleSidebar()">
+
+        <i class="fa-solid fa-bars"></i>
+
+    </button>
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar" id="sidebar">
+
+
+        <!-- LOGO -->
+
+        <a href="{% url 'admin_dashboard' %}"
+           class="sidebar-logo">
+
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+
+            ToolBox
+
+        </a>
+
+
+        <!-- TITLE -->
+
+        <div class="sidebar-title">
+
+            Administration
+
+        </div>
+
+
+        <!-- MENU -->
+
+        <ul class="sidebar-menu">
+
+
+            <!-- DASHBOARD -->
+
+            <li>
+
+                <a href="{% url 'admin_dashboard' %}">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                    <span>Dashboard</span>
+
+                </a>
+
+            </li>
+
+
+            <!-- MANAGE TOOLS -->
+
+            <li>
+
+                <button class="menu-toggle"
+                        onclick="toggleTools()">
+
+                    <span class="menu-toggle-left">
+
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                        <span>Manage Tools</span>
+
+                    </span>
+
+                    <i class="fa-solid fa-chevron-down arrow"
+                       id="toolArrow"></i>
+
+                </button>
+
+
+                <div class="submenu"
+                     id="toolSubmenu">
+
+                    <a href="{% url 'add_tool' %}">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        <span>Add Tool</span>
+
+                    </a>
+
+
+                    <a href="{% url 'view_tool' %}">
+
+                        <i class="fa-solid fa-toolbox"></i>
+
+                        <span>View Tools</span>
+
+                    </a>
+
+                </div>
+
+            </li>
+
+
+            <!-- CUSTOMERS -->
+
+            <li>
+
+                <a href="{% url 'view_customers' %}">
+
+                    <i class="fa-solid fa-users"></i>
+
+                    <span>Customers</span>
+
+                </a>
+
+            </li>
+
+
+            <!-- RENTAL REQUESTS -->
+
+            <li>
+
+                <a href="{% url 'manage_rentals' %}"
+                   class="active">
+
+                    <i class="fa-solid fa-clipboard-list"></i>
+
+                    <span>Rental Requests</span>
+
+                </a>
+
+            </li>
+
+
+        </ul>
+
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <div class="main-wrapper">
+
+
+        <!-- ================= TOP NAVBAR ================= -->
+
+        <div class="navbar-container">
+
+            <nav class="navbar">
+
+
+                <div class="nav-right">
+
+
+                    <span class="admin-name">
+
+                        <i class="fa-solid fa-user"></i>
+
+                        Administrator
+
+                    </span>
+
+
+                    <a href="{% url 'admin_logout' %}"
+                       class="logout">
+
+                        <i class="fa-solid fa-right-from-bracket"></i>
+
+                        Logout
+
+                    </a>
+
+
+                </div>
+
+
+            </nav>
+
+        </div>
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <section class="content">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+
+                <div class="page-label">
+
+                    Rental Management
+
+                </div>
+
+
+                <h1>
+
+                    Manage Rentals
+
+                </h1>
+
+
+                <p>
+
+                    Review customer rental requests and update their status.
+
+                </p>
+
+
+            </div>
+
+
+            <!-- ================= MESSAGES ================= -->
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="message">
+
+                        <i class="fa-solid fa-circle-info"></i>
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+
+            <!-- ================= RENTALS ================= -->
+
+            {% if rentals %}
+
+
+                <div class="table-card">
+
+
+                    <!-- TABLE HEADER -->
+
+                    <div class="table-header">
+
+
+                        <div class="header-icon">
+
+                            <i class="fa-solid fa-clipboard-list"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+
+                                Rental Requests
+
+                            </h2>
+
+
+                            <p>
+
+                                Review and manage customer rental requests.
+
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- TABLE -->
+
+                    <div class="table-container">
+
+
+                        <table>
+
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Customer
+                                    </th>
+
+                                    <th>
+                                        Tool
+                                    </th>
+
+                                    <th>
+                                        Dates
+                                    </th>
+
+                                    <th>
+                                        Days
+                                    </th>
+
+                                    <th>
+                                        Total Price
+                                    </th>
+
+                                    <th>
+                                        Current Status
+                                    </th>
+
+                                    <th>
+                                        Update Status
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+
+                                {% for rental in rentals %}
+
+
+                                    <tr>
+
+
+                                        <!-- CUSTOMER -->
+
+                                        <td>
+
+                                            <div class="customer">
+
+                                                <i class="fa-solid fa-user"></i>
+
+                                                {{ rental.customer.username }}
+
+                                            </div>
+
+
+                                            <small>
+
+                                                <i class="fa-solid fa-phone"></i>
+
+                                                {{ rental.customer.phone }}
+
+                                            </small>
+
+                                        </td>
+
+
+                                        <!-- TOOL -->
+
+                                        <td>
+
+                                            <div class="tool-name">
+
+                                                <i class="fa-solid fa-toolbox"></i>
+
+                                                {{ rental.tool.name }}
+
+                                            </div>
+
+
+                                            <small>
+
+                                                {{ rental.tool.category }}
+
+                                            </small>
+
+                                        </td>
+
+
+                                        <!-- DATES -->
+
+                                        <td class="dates">
+
+                                            <i class="fa-regular fa-calendar-days"></i>
+
+                                            {{ rental.start_date }}
+
+                                            <br>
+
+                                            <span>
+                                                to
+                                            </span>
+
+                                            <br>
+
+                                            <i class="fa-regular fa-calendar-days"></i>
+
+                                            {{ rental.end_date }}
+
+                                        </td>
+
+
+                                        <!-- DAYS -->
+
+                                        <td class="days">
+
+                                            {{ rental.total_days }}
+
+                                        </td>
+
+
+                                        <!-- PRICE -->
+
+                                        <td class="price">
+
+                                            <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                                            {{ rental.total_price }}
+
+                                        </td>
+
+
+                                        <!-- CURRENT STATUS -->
+
+                                        <td>
+
+                                            <span class="status">
+
+                                                <i class="fa-solid fa-circle"></i>
+
+                                                {{ rental.status }}
+
+                                            </span>
+
+                                        </td>
+
+
+                                        <!-- UPDATE STATUS -->
+
+                                        <td>
+
+
+                                            <form
+
+                                                method="POST"
+
+                                                action="{% url 'update_rental_status' rental.id %}"
+
+                                                class="status-form"
+
+                                            >
+
+                                                {% csrf_token %}
+
+
+                                                <select
+
+                                                    name="status"
+
+                                                    class="status-select"
+
+                                                >
+
+                                                    <option value="Pending"
+
+                                                        {% if rental.status == "Pending" %}
+
+                                                            selected
+
+                                                        {% endif %}>
+
+                                                        Pending
+
+                                                    </option>
+
+
+                                                    <option value="Approved"
+
+                                                        {% if rental.status == "Approved" %}
+
+                                                            selected
+
+                                                        {% endif %}>
+
+                                                        Approved
+
+                                                    </option>
+
+
+                                                    <option value="Rejected"
+
+                                                        {% if rental.status == "Rejected" %}
+
+                                                            selected
+
+                                                        {% endif %}>
+
+                                                        Rejected
+
+                                                    </option>
+
+
+                                                    <option value="Active"
+
+                                                        {% if rental.status == "Active" %}
+
+                                                            selected
+
+                                                        {% endif %}>
+
+                                                        Active
+
+                                                    </option>
+
+
+                                                    <option value="Completed"
+
+                                                        {% if rental.status == "Completed" %}
+
+                                                            selected
+
+                                                        {% endif %}>
+
+                                                        Completed
+
+                                                    </option>
+
+
+                                                    <option value="Cancelled"
+
+                                                        {% if rental.status == "Cancelled" %}
+
+                                                            selected
+
+                                                        {% endif %}>
+
+                                                        Cancelled
+
+                                                    </option>
+
+                                                </select>
+
+
+                                                <button
+
+                                                    type="submit"
+
+                                                    class="update-btn"
+
+                                                >
+
+                                                    <i class="fa-solid fa-rotate"></i>
+
+                                                    Update
+
+                                                </button>
+
+
+                                            </form>
+
+
+                                        </td>
+
+
+                                    </tr>
+
+
+                                {% endfor %}
+
+
+                            </tbody>
+
+
+                        </table>
+
+
+                    </div>
+
+
+                </div>
+
+
+            {% else %}
+
+
+                <!-- ================= EMPTY ================= -->
+
+                <div class="empty">
+
+
+                    <div class="empty-icon">
+
+                        <i class="fa-solid fa-clipboard-list"></i>
+
+                    </div>
+
+
+                    <h2>
+
+                        No Rental Requests
+
+                    </h2>
+
+
+                    <p>
+
+                        There are currently no rental requests from customers.
+
+                    </p>
+
+
+                </div>
+
+
+            {% endif %}
+
+
+        </section>
+
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <strong>
+
+            Tool<span>Box</span>
+
+        </strong>
+
+        &nbsp; • &nbsp;
+
+        © 2026 ToolBox. Admin Panel.
+
+    </footer>
+
+
+    <!-- ================= SCRIPT ================= -->
+
+    <script>
+
+
+        function toggleSidebar() {
+
+            const sidebar =
+                document.getElementById("sidebar");
+
+            sidebar.classList.toggle("open");
+
+        }
+
+
+        function toggleTools() {
+
+            const submenu =
+                document.getElementById("toolSubmenu");
+
+            const button =
+                document.querySelector(".menu-toggle");
+
+            submenu.classList.toggle("show");
+
+            button.classList.toggle("open");
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>

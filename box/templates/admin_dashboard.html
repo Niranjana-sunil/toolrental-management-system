@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | ToolBox</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px),
+                #0f0e13;
+
+            background-size: 45px 45px;
+
+            color: #f8f5f7;
+        }
+
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            position: fixed;
+
+            left: 0;
+            top: 0;
+
+            width: 245px;
+            height: 100vh;
+
+            background: #111016;
+
+            border-right: 1px solid rgba(255,255,255,0.07);
+
+            color: white;
+
+            padding: 28px 18px;
+
+            z-index: 2000;
+
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            display: block;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 24px;
+
+            font-weight: 800;
+
+            padding: 0 12px;
+
+            margin-bottom: 42px;
+        }
+
+        .sidebar-logo i {
+            color: #c875a3;
+            margin-right: 8px;
+        }
+
+        .sidebar-title {
+            color: #6f6972;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            padding: 0 12px;
+
+            margin-bottom: 12px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-menu a,
+        .menu-toggle {
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 14px;
+
+            text-decoration: none;
+
+            color: #aaa5ad;
+
+            background: transparent;
+
+            border: none;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            font-size: 13px;
+
+            text-align: left;
+
+            transition: 0.25s;
+        }
+
+        .sidebar-menu a:hover,
+        .menu-toggle:hover {
+            color: #ffffff;
+
+            background: rgba(200,117,163,0.09);
+        }
+
+        .sidebar-menu a.active {
+            background: #a65380;
+
+            color: #ffffff;
+
+            box-shadow: 0 8px 22px rgba(166,83,128,0.20);
+        }
+
+        .sidebar-menu i,
+        .menu-toggle i {
+            width: 18px;
+
+            text-align: center;
+        }
+
+        .menu-toggle {
+            justify-content: space-between;
+        }
+
+        .menu-toggle-left {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+        .arrow {
+            font-size: 10px;
+
+            transition: 0.3s;
+        }
+
+        .menu-toggle.open .arrow {
+            transform: rotate(180deg);
+        }
+
+
+        /* ================= SUBMENU ================= */
+
+        .submenu {
+            max-height: 0;
+
+            overflow: hidden;
+
+            margin-left: 14px;
+
+            padding-left: 14px;
+
+            border-left: 1px solid rgba(255,255,255,0.09);
+
+            transition: max-height 0.3s ease;
+        }
+
+        .submenu.show {
+            max-height: 200px;
+        }
+
+        .submenu a {
+            padding: 10px 12px;
+
+            color: #858087;
+
+            font-size: 12px;
+        }
+
+        .submenu a:hover {
+            color: #dca2c4;
+
+            background: rgba(200,117,163,0.08);
+        }
+
+
+        /* ================= LOGOUT ================= */
+
+        .sidebar-logout {
+            margin-top: 35px;
+
+            border-top: 1px solid rgba(255,255,255,0.07);
+
+            padding-top: 20px;
+        }
+
+        .sidebar-logout a {
+            color: #aaa5ad;
+        }
+
+        .sidebar-logout a:hover {
+            color: #dca2c4;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .main-wrapper {
+            margin-left: 245px;
+
+            min-height: 100vh;
+        }
+
+
+        /* ================= TOP NAVBAR ================= */
+
+        .navbar-container {
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            background: rgba(15,14,19,0.94);
+
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+
+            backdrop-filter: blur(12px);
+        }
+
+        .navbar {
+            width: 90%;
+
+            max-width: 1200px;
+
+            min-height: 72px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+        }
+
+        .nav-right {
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+        .admin-name {
+            color: #aaa5ad;
+
+            font-size: 13px;
+        }
+
+        .admin-name i {
+            color: #c875a3;
+
+            margin-right: 6px;
+        }
+
+        .logout {
+            display: inline-block;
+
+            border: 1px solid rgba(200,117,163,0.45);
+
+            border-radius: 30px;
+
+            color: #dca2c4;
+
+            padding: 9px 18px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            transition: 0.25s;
+        }
+
+        .logout i {
+            margin-right: 6px;
+        }
+
+        .logout:hover {
+            background: #a65380;
+
+            color: #ffffff;
+
+            border-color: #a65380;
+        }
+
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 90%;
+
+            max-width: 1200px;
+
+            margin: 55px auto 75px;
+        }
+
+
+        /* ================= WELCOME ================= */
+
+        .welcome {
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 90% 15%,
+                    rgba(166,83,128,0.24),
+                    transparent 30%
+                ),
+                #17151c;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 24px;
+
+            color: white;
+
+            padding: 45px;
+
+            margin-bottom: 35px;
+        }
+
+        .welcome::after {
+            content: "";
+
+            position: absolute;
+
+            width: 420px;
+
+            height: 420px;
+
+            border: 70px solid rgba(200,117,163,0.05);
+
+            border-radius: 50%;
+
+            right: -160px;
+
+            top: -170px;
+        }
+
+        .welcome-content {
+            position: relative;
+
+            z-index: 2;
+        }
+
+        .welcome-label {
+            color: #dca2c4;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 15px;
+
+            border-left: 3px solid #c875a3;
+
+            padding-left: 10px;
+        }
+
+        .welcome h1 {
+            font-size: 36px;
+
+            letter-spacing: -1px;
+
+            margin-bottom: 10px;
+
+            font-weight: 800;
+        }
+
+        .welcome p {
+            color: #aaa5ad;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* ================= STATS ================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 55px;
+        }
+
+        .stat-card {
+            background: rgba(27,25,32,0.90);
+
+            padding: 25px;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 18px;
+
+            transition: 0.25s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+
+            border-color: rgba(200,117,163,0.30);
+
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+        }
+
+        .stat-icon {
+            width: 44px;
+
+            height: 44px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: rgba(166,83,128,0.12);
+
+            border: 1px solid rgba(200,117,163,0.15);
+
+            border-radius: 12px;
+
+            color: #dca2c4;
+
+            font-size: 17px;
+
+            margin-bottom: 18px;
+        }
+
+        .stat-card h3 {
+            font-size: 29px;
+
+            color: #ffffff;
+
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: #858087;
+
+            font-size: 12px;
+        }
+
+
+        /* ================= SECTION HEADING ================= */
+
+        .section-heading {
+            display: flex;
+
+            align-items: end;
+
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 30px;
+
+            color: #ffffff;
+
+            letter-spacing: -1px;
+        }
+
+        .section-label {
+            color: #77727b;
+
+            font-size: 13px;
+        }
+
+
+        /* ================= MANAGEMENT ================= */
+
+        .management {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .manage-card {
+            background: rgba(27,25,32,0.90);
+
+            padding: 28px;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 20px;
+
+            transition: 0.25s;
+        }
+
+        .manage-card:hover {
+            transform: translateY(-5px);
+
+            border-color: rgba(200,117,163,0.30);
+
+            box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+        }
+
+        .manage-icon {
+            width: 48px;
+
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: rgba(166,83,128,0.12);
+
+            border: 1px solid rgba(200,117,163,0.15);
+
+            border-radius: 13px;
+
+            color: #dca2c4;
+
+            font-size: 19px;
+
+            margin-bottom: 20px;
+        }
+
+        .manage-card h3 {
+            font-size: 19px;
+
+            color: #ffffff;
+
+            margin-bottom: 9px;
+        }
+
+        .manage-card p {
+            color: #858087;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+            margin-bottom: 22px;
+        }
+
+        .manage-btn {
+            display: inline-block;
+
+            background: #a65380;
+
+            color: white;
+
+            padding: 10px 17px;
+
+            border-radius: 30px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            transition: 0.25s;
+        }
+
+        .manage-btn i {
+            margin-left: 7px;
+        }
+
+        .manage-btn:hover {
+            background: #bb6d99;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #0c0b0f;
+
+            border-top: 1px solid rgba(255,255,255,0.07);
+
+            color: #858087;
+
+            padding: 28px 20px;
+
+            text-align: center;
+        }
+
+        footer h2 {
+            color: white;
+
+            font-size: 19px;
+
+            margin-bottom: 8px;
+        }
+
+        footer h2 span {
+            color: #c875a3;
+        }
+
+        footer p {
+            font-size: 12px;
+        }
+
+
+        /* ================= MOBILE MENU ================= */
+
+        .mobile-menu {
+            display: none;
+
+            position: fixed;
+
+            top: 15px;
+
+            left: 15px;
+
+            width: 42px;
+
+            height: 42px;
+
+            border: 1px solid rgba(255,255,255,0.10);
+
+            border-radius: 10px;
+
+            background: #17151c;
+
+            color: #dca2c4;
+
+            font-size: 17px;
+
+            cursor: pointer;
+
+            z-index: 3000;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1100px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .management {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 750px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+            .mobile-menu {
+                display: flex;
+
+                align-items: center;
+
+                justify-content: center;
+            }
+
+            .navbar {
+                width: 90%;
+
+                padding-left: 55px;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .admin-name {
+                display: none;
+            }
+
+            .container {
+                width: 90%;
+
+                margin-top: 40px;
+            }
+
+            .welcome {
+                padding: 32px 25px;
+            }
+
+            .welcome h1 {
+                font-size: 28px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+
+                gap: 14px;
+            }
+
+            .section-heading {
+                display: block;
+            }
+
+            .section-label {
+                display: block;
+
+                margin-top: 7px;
+            }
+
+            .section-title {
+                font-size: 27px;
+            }
+
+            .manage-card {
+                padding: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= MOBILE MENU ================= -->
+
+<button class="mobile-menu" onclick="toggleSidebar()">
+
+    <i class="fa-solid fa-bars"></i>
+
+</button>
+
+
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar" id="sidebar">
+
+
+    <a href="{% url 'admin_dashboard' %}" class="sidebar-logo">
+
+        <i class="fa-solid fa-screwdriver-wrench"></i>
+
+        ToolBox
+
+    </a>
+
+
+    <div class="sidebar-title">
+        Administration
+    </div>
+
+
+    <ul class="sidebar-menu">
+
+
+        <!-- DASHBOARD -->
+
+        <li>
+
+            <a href="{% url 'admin_dashboard' %}" class="active">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+        </li>
+
+
+
+        <!-- MANAGE TOOLS -->
+
+        <li>
+
+            <button class="menu-toggle" onclick="toggleTools()">
+
+                <span class="menu-toggle-left">
+
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                    <span>Manage Tools</span>
+
+                </span>
+
+                <i class="fa-solid fa-chevron-down arrow"
+                   id="toolArrow"></i>
+
+            </button>
+
+
+            <div class="submenu" id="toolSubmenu">
+
+                <a href="{% url 'add_tool' %}">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Add Tool
+
+                </a>
+
+
+                <a href="{% url 'view_tool' %}">
+
+                    <i class="fa-solid fa-toolbox"></i>
+
+                    View Tools
+
+                </a>
+
+            </div>
+
+        </li>
+
+
+
+
+        <!-- CUSTOMERS -->
+
+        <li>
+
+            <a href="{% url 'view_customers' %}">
+
+                <i class="fa-solid fa-users"></i>
+
+                <span>Customers</span>
+
+            </a>
+
+        </li>
+
+
+
+        <!-- RENTAL REQUESTS -->
+
+        <li>
+
+            <a href="{% url 'manage_rentals' %}">
+
+                <i class="fa-solid fa-clipboard-list"></i>
+
+                <span>Rental Requests</span>
+
+            </a>
+
+        </li>
+
+
+    </ul>
+
+
+
+
+</aside>
+
+
+
+<!-- ================= MAIN WRAPPER ================= -->
+
+<div class="main-wrapper">
+
+
+    <!-- ================= TOP NAVBAR ================= -->
+
+    <div class="navbar-container">
+
+        <nav class="navbar">
+
+            <div class="nav-right">
+
+                <span class="admin-name">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    Administrator
+
+                </span>
+
+
+                <a href="{% url 'admin_logout' %}" class="logout">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    Logout
+
+                </a>
+
+            </div>
+
+        </nav>
+
+    </div>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+
+
+        <!-- ================= WELCOME ================= -->
+
+        <section class="welcome">
+
+            <div class="welcome-content">
+
+                <div class="welcome-label">
+                    Admin Dashboard
+                </div>
+
+
+                <h1>
+                    Welcome, Admin
+                </h1>
+
+
+                <p>
+                    Manage your ToolBox rental platform from one place.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= STATISTICS ================= -->
+
+        <section class="stats">
+
+
+            <!-- CUSTOMERS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+                <h3>
+                    {{ total_customers }}
+                </h3>
+
+                <p>
+                    Total Customers
+                </p>
+
+            </div>
+
+
+
+            <!-- TOOLS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                </div>
+
+                <h3>
+                    {{ total_tools }}
+                </h3>
+
+                <p>
+                    Total Tools
+                </p>
+
+            </div>
+
+
+
+            <!-- ACTIVE RENTALS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fa-solid fa-box"></i>
+
+                </div>
+
+                <h3>
+                    {{ active_rentals }}
+                </h3>
+
+                <p>
+                    Active Rentals
+                </p>
+
+            </div>
+
+
+
+            <!-- COMPLETED RENTALS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                </div>
+
+                <h3>
+                    {{ completed_rentals }}
+                </h3>
+
+                <p>
+                    Completed Rentals
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ================= MANAGEMENT ================= -->
+
+        <div class="section-heading">
+
+            <div>
+
+                <div class="section-label">
+                    Administration
+                </div>
+
+                <h2 class="section-title">
+                    Management
+                </h2>
+
+            </div>
+
+
+            <span class="section-label">
+                Manage your platform
+            </span>
+
+        </div>
+
+
+
+        <section class="management">
+
+
+            <!-- CUSTOMERS -->
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+                <h3>
+                    Customers
+                </h3>
+
+                <p>
+                    View and manage registered ToolBox customers.
+                </p>
+
+                <a href="{% url 'view_customers' %}" class="manage-btn">
+
+                    Manage Customers
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+
+            <!-- TOOLS -->
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                </div>
+
+                <h3>
+                    Tools
+                </h3>
+
+                <p>
+                    Add, update and manage tools available for rental.
+                </p>
+
+                <a href="{% url 'view_tool' %}" class="manage-btn">
+
+                    Manage Tools
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+
+            <!-- RENTALS -->
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+
+                    <i class="fa-solid fa-clipboard-list"></i>
+
+                </div>
+
+                <h3>
+                    Rentals
+                </h3>
+
+                <p>
+                    Monitor customer rentals and rental status.
+                </p>
+
+                <a href="{% url 'manage_rentals' %}" class="manage-btn">
+
+                    Manage Rentals
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <h2>
+            Tool<span>Box</span>
+        </h2>
+
+        <p>
+
+            <i class="fa-regular fa-copyright"></i>
+
+            2026 ToolBox. Admin Panel.
+
+        </p>
+
+    </footer>
+
+
+</div>
+
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+    function toggleTools() {
+
+        const submenu =
+            document.getElementById("toolSubmenu");
+
+        const button =
+            document.querySelector(".menu-toggle");
+
+        submenu.classList.toggle("show");
+
+        button.classList.toggle("open");
+
+    }
+
+
+    function toggleSidebar() {
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        sidebar.classList.toggle("open");
+
+    }
+
+</script>
+
+
+</body>
+
+</html>
